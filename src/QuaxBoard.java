@@ -30,7 +30,7 @@ public class QuaxBoard extends Application {
         board.setFill(Color.ORANGE);
         pane.getChildren().add(board);
 
-        // boarder top and botton
+        // boarder top and bottom
         Rectangle topStrip = new Rectangle(0, 0, totalSize, border);
         topStrip.setFill(Color.web("#2A2A2A"));
         pane.getChildren().add(topStrip);
