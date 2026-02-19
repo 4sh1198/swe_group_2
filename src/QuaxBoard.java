@@ -30,7 +30,7 @@ public class QuaxBoard extends Application {
         board.setFill(Color.ORANGE);
         pane.getChildren().add(board);
 
-        // displaying A-K on top
+        // boarder top and botton
         Rectangle topStrip = new Rectangle(0, 0, totalSize, border);
         topStrip.setFill(Color.web("#2A2A2A"));
         pane.getChildren().add(topStrip);
@@ -39,7 +39,7 @@ public class QuaxBoard extends Application {
         bottomStrip.setFill(Color.web("#2A2A2A"));
         pane.getChildren().add(bottomStrip);
 
-        // displaying 1-11
+        // boarder sides
         Rectangle leftStrip = new Rectangle(0, 0, border, totalSize);
         leftStrip.setFill(Color.web("#D0D0D0"));
         pane.getChildren().add(leftStrip);
@@ -48,11 +48,10 @@ public class QuaxBoard extends Application {
         rightStrip.setFill(Color.web("#D0D0D0"));
         pane.getChildren().add(rightStrip);
 
-
+        // displaying A-K
         String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"};
 
         for (int col = 0; col < cells; col++) {
-            // Find the centre x position for this column
             double x = border + col * cellSize + cellSize / 2;
 
 
@@ -72,7 +71,7 @@ public class QuaxBoard extends Application {
             pane.getChildren().add(bottomLabel);
         }
 
-
+        //displaying 1-11
         for (int row = 0; row < cells; row++) {
             int number = cells - row;
             double y = border + row * cellSize + cellSize / 2 + 5;
