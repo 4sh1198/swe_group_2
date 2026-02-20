@@ -168,7 +168,7 @@ public class GameController {
     }
 
     private void displayPlayerTurn(){
-        String currentPlayer = "Black";
+        String currentPlayer = "White";
 
         boardPane.getChildren().removeIf(node -> "turnDisplay".equals(node.getUserData()));
 
@@ -183,20 +183,24 @@ public class GameController {
 
         Color playerColor = currentPlayer.equalsIgnoreCase("Black") ? Color.BLACK : Color.WHITE;
 
-        Polygon blackOct = makeOctagon(xStart + RADIUS, yBottom + RADIUS);
-        blackOct.setFill(playerColor);
-        blackOct.setUserData("turnDisplay");
-        boardPane.getChildren().add(blackOct);
+        Polygon Oct = makeOctagon(xStart + RADIUS, yBottom + RADIUS);
+        Oct.setFill(playerColor);
+        Oct.setStroke(Color.BLACK);
+        Oct.setStrokeWidth(1.0);
+        Oct.setUserData("turnDisplay");
+        boardPane.getChildren().add(Oct);
 
         double rhombusX = xStart + 3 * RADIUS;
         double rhombusY = yBottom + RADIUS;
-        Polygon blackRho = makeRhombus(rhombusX, rhombusY);
-        blackRho.setFill(playerColor);
-        blackRho.setUserData("turnDisplay");
-        boardPane.getChildren().add(blackRho);
+        Polygon Rho = makeRhombus(rhombusX, rhombusY);
+        Rho.setFill(playerColor);
+        Rho.setStroke(Color.BLACK);
+        Rho.setStrokeWidth(1.0);
+        Rho.setUserData("turnDisplay");
+        boardPane.getChildren().add(Rho);
 
         Text turnText = new Text(currentPlayer.toUpperCase() + " to play");
-        turnText.setFill(playerColor);
+        turnText.setFill(Color.BLACK);
         turnText.setFont(Font.font("Arial", 16));
         turnText.setX(rhombusX + RADIUS + 10);
         turnText.setY(rhombusY + 5);
