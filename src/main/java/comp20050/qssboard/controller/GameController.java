@@ -13,17 +13,17 @@ import javafx.scene.text.Text;
 
 public class GameController {
 
-    // ── Board config ────────────────────────────────────────────────────
+    // Board config
     private static final int    CELLS   = 11;
     private static final int    RADIUS  = 28;   // octagon circumradius in pixels
     private static final double BORDER  = 40.0; // border strip width
 
-    // Derived geometry
+    // derived geometry
     private static final double STEP       = 2 * RADIUS * Math.cos(Math.PI / 8); // centre-to-centre
     private static final double BOARD_SIZE = CELLS * STEP;                        // full tiled area
     private static final double TOTAL_SIZE = BORDER + BOARD_SIZE + BORDER;
 
-    // ── Colours ─────────────────────────────────────────────────────────
+    // Colours
     private static final Color OCT_FILL    = Color.ORANGE;
     private static final Color OCT_STROKE  = Color.web("#3060A0");
     private static final Color RHO_FILL    = Color.web("#3060A0");
@@ -41,7 +41,7 @@ public class GameController {
         displayPlayerTurn();
     }
 
-    // ── Main draw method ─────────────────────────────────────────────────
+    // Main draw method
 
     private void drawBoard() {
         boardPane.getChildren().clear();
@@ -97,7 +97,7 @@ public class GameController {
         drawLabels();
     }
 
-    // ── Border strips ────────────────────────────────────────────────────
+    // Border strips
 
     private void drawBorders() {
         // Top & bottom (dark)
@@ -119,7 +119,7 @@ public class GameController {
         boardPane.getChildren().add(rightStrip);
     }
 
-    // ── Column / Row labels ──────────────────────────────────────────────
+    // Column / Row labels
 
     private void drawLabels() {
         String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"};
@@ -209,7 +209,7 @@ public class GameController {
 
     }
 
-    // ── Shape factories ──────────────────────────────────────────────────
+    // Shape factories
 
     /**
      * Creates a regular octagon centred at (cx, cy) with circumradius RADIUS.
@@ -241,7 +241,7 @@ public class GameController {
         );
     }
 
-    // ── Event handlers ───────────────────────────────────────────────────
+    // Event handlers
 
     private void onOctagonClicked(Octagon oct) {
         System.out.println("Clicked: " + oct);
