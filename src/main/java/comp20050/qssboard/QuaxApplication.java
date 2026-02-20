@@ -12,7 +12,8 @@ public class QuaxApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(QuaxApplication.class.getResource("game-view.fxml"));
         double totalSize = 40 + 11 * (2 * 28 * Math.cos(Math.PI / 8)) + 40; // BORDER + BOARD + BORDER
-        Scene scene = new Scene(fxmlLoader.load(), totalSize, totalSize);
+        double sceneHeight = totalSize + 80;
+        Scene scene = new Scene(fxmlLoader.load(), totalSize, sceneHeight);
         stage.setTitle("Quax (Human V Bot)");
         stage.setScene(scene);
         stage.setResizable(false);

@@ -38,6 +38,7 @@ public class GameController {
     public void initialize() {
         board = new QuaxBoard(CELLS);
         drawBoard();
+        displayPlayerTurn();
     }
 
     // ── Main draw method ─────────────────────────────────────────────────
@@ -164,6 +165,44 @@ public class GameController {
             rightLabel.setY(y);
             boardPane.getChildren().add(rightLabel);
         }
+    }
+
+    private void displayPlayerTurn(){
+        String currentPlayer = "Black";
+
+        boardPane.getChildren().removeIf(node -> "turnDisplay".equals(node.getUserData()));
+
+        double displayHeight = 100;
+        double yBottom = TOTAL_SIZE + 10;
+        double xStart = BORDER;
+
+        Rectangle displayBg = new Rectangle(0, yBottom - 10, TOTAL_SIZE, displayHeight);
+        displayBg.setFill(Color.web("#D0D0D0"));
+        displayBg.setUserData("turnDisplay");
+        boardPane.getChildren().add(displayBg);
+
+        Color playerColor = currentPlayer.equalsIgnoreCase("Black") ? Color.BLACK : Color.WHITE;
+
+        Polygon blackOct = makeOctagon(xStart + RADIUS, yBottom + RADIUS);
+        blackOct.setFill(playerColor);
+        blackOct.setUserData("turnDisplay");
+        boardPane.getChildren().add(blackOct);
+
+        double rhombusX = xStart + 3 * RADIUS;
+        double rhombusY = yBottom + RADIUS;
+        Polygon blackRho = makeRhombus(rhombusX, rhombusY);
+        blackRho.setFill(playerColor);
+        blackRho.setUserData("turnDisplay");
+        boardPane.getChildren().add(blackRho);
+
+        Text turnText = new Text(currentPlayer.toUpperCase() + " to play");
+        turnText.setFill(playerColor);
+        turnText.setFont(Font.font("Arial", 16));
+        turnText.setX(rhombusX + RADIUS + 10);
+        turnText.setY(rhombusY + 5);
+        turnText.setUserData("turnDisplay");
+        boardPane.getChildren().add(turnText);
+
     }
 
     // ── Shape factories ──────────────────────────────────────────────────
