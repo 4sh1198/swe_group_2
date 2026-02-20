@@ -168,7 +168,7 @@ public class GameController {
     }
 
     private void displayPlayerTurn(){
-        String currentPlayer = "White";
+        String currentPlayer = "Black";
 
         boardPane.getChildren().removeIf(node -> "turnDisplay".equals(node.getUserData()));
 
