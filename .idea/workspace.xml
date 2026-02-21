@@ -9,10 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="minor corrections">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
+    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="minor corrections&#10;create artifact Board.jar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/Launcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +19,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -28,12 +32,12 @@
     &quot;assignee&quot;: &quot;0TricK&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/4sh1198/swe_group_2.git",
-    "accountId": "34187012-c06b-47c4-aecf-db76c2d22c5d"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/4sh1198/swe_group_2.git&quot;,
+    &quot;accountId&quot;: &quot;34187012-c06b-47c4-aecf-db76c2d22c5d&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -45,19 +49,21 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Launcher.executor": "Run",
+    "JAR Application.QSSBoard.jar.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "sprint2-Sharva",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/sharv/OneDrive/Desktop/Uni Docs/Java Lab/QSSBoard",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
@@ -65,7 +71,12 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sharv\OneDrive\Desktop\Uni Docs\Java Lab\QSSBoard\" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Launcher">
     <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="comp20050.qssboard.Launcher" />
       <module name="QSSBoard" />
@@ -79,8 +90,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="QSSBoard.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/QSSBoard_jar/QSSBoard.jar" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JAR Application.QSSBoard.jar" />
         <item itemvalue="Application.Launcher" />
       </list>
     </recent_temporary>
@@ -101,7 +117,13 @@
       <option name="presentableId" value="Default" />
       <updated>1771554749513</updated>
       <workItem from="1771554750756" duration="700000" />
-      <workItem from="1771624319374" duration="408000" />
+      <workItem from="1771624319374" duration="653000" />
+      <workItem from="1771625263084" duration="777000" />
+      <workItem from="1771687524993" duration="736000" />
+      <workItem from="1771689512315" duration="74000" />
+      <workItem from="1771689597650" duration="22000" />
+      <workItem from="1771689655395" duration="30000" />
+      <workItem from="1771689797710" duration="497000" />
     </task>
     <task id="LOCAL-00001" summary="feature 3 implemented">
       <option name="closed" value="true" />
@@ -119,7 +141,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771562278228</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="minor corrections&#10;create artifact Board.jar">
+      <option name="closed" value="true" />
+      <created>1771624969897</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1771624969897</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,6 +158,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feature 3 implemented" />
     <MESSAGE value="minor corrections" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor corrections" />
+    <MESSAGE value="minor corrections&#10;create artifact Board.jar" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor corrections&#10;create artifact Board.jar" />
   </component>
 </project>

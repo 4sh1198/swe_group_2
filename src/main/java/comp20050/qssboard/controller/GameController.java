@@ -24,11 +24,11 @@ public class GameController {
     private static final double TOTAL_SIZE = BORDER + BOARD_SIZE + BORDER;
 
     // Colours
-    private static final Color OCT_FILL    = Color.ORANGE;
-    private static final Color OCT_STROKE  = Color.web("#3060A0");
-    private static final Color RHO_FILL    = Color.web("#3060A0");
-    private static final Color RHO_STROKE  = Color.web("#3060A0");
-    private static final Color BOARD_BG    = Color.web("#3060A0"); // visible in the gaps at edges
+    private static final Color OCT_FILL    = Color.DARKORANGE;
+    private static final Color OCT_STROKE  = Color.BLACK;
+    private static final Color RHO_FILL    = Color.ORANGE;
+    private static final Color RHO_STROKE  = Color.BLACK;
+    private static final Color BOARD_BG    = Color.WHITE; // visible in the gaps at edges
 
     @FXML private Pane boardPane;
 
@@ -111,11 +111,11 @@ public class GameController {
 
         // Left & right (grey)
         Rectangle leftStrip = new Rectangle(0, 0, BORDER, TOTAL_SIZE);
-        leftStrip.setFill(Color.web("#D0D0D0"));
+        leftStrip.setFill(Color.SADDLEBROWN);
         boardPane.getChildren().add(leftStrip);
 
         Rectangle rightStrip = new Rectangle(TOTAL_SIZE - BORDER, 0, BORDER, TOTAL_SIZE);
-        rightStrip.setFill(Color.web("#D0D0D0"));
+        rightStrip.setFill(Color.SADDLEBROWN);
         boardPane.getChildren().add(rightStrip);
     }
 
