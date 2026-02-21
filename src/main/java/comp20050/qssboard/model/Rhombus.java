@@ -70,6 +70,6 @@ public class Rhombus {
 
     @Override
     public String toString() {
-        return "Rho(" + centre[0] + "," + centre[1] + ")=" + state;
+        return "Rho(" + (centre[0] + 1) + "," + (centre[1] + 1) + ")=" + state;
     }
 }
