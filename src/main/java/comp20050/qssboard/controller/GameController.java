@@ -230,9 +230,11 @@ public class GameController {
         button.setUserData("pieButton");
 
 
-       button.setOnAction(e -> {
+       /*button.setOnAction(e -> {
             ActivatePie();
         });
+
+        */
 
         boardPane.getChildren().add(button);
     }
@@ -270,6 +272,8 @@ public class GameController {
     }
 
     // Event handlers
+
+   // private void on
 
     private void onOctagonClicked(Octagon oct) {
         System.out.println("Clicked: " + oct);
