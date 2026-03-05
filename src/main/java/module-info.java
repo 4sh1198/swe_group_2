@@ -1,6 +1,7 @@
 module comp20050.qssboard {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens comp20050.qssboard to javafx.fxml;
