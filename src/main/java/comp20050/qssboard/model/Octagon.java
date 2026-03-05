@@ -41,17 +41,38 @@ public class Octagon implements Tile {
      * Returns the octagon neighbour in direction d (N/S/E/W).
      * Returns null if this cell is on the board edge in that direction.
      */
-//    public Octagon onbor(Direction d) {
-//        //TODO
-//    }
+    public Octagon onbor(Direction d) {
+        double oCol = this.centre[0];
+        double oRow = this.centre[1];
+
+        switch (d) {
+            case N -> { oRow++; }
+            case E -> { oCol++; }
+            case W -> { oCol--; }
+            case S -> { oRow--; }
+            default -> { return null; }
+        }
+        return board.getOctagon((int)oCol, (int)oRow);
+    }
 
     /**
      * Returns the rhombus neighbour in direction d (NE/SE/SW/NW).
      * Returns null if this cell is on the board edge in that direction.
      */
-//    public Rhombus rnbor(Direction d) {
-//        //TODO
-//    }
+    public Rhombus rnbor(Direction d) {
+
+        double oCol = this.centre[0];
+        double oRow = this.centre[1];
+
+        switch (d) {
+            case NW -> { oCol -= 0.5; oRow += 0.5; }
+            case NE -> { oCol += 0.5; oRow += 0.5; }
+            case SW -> { oCol -= 0.5; oRow -= 0.5; }
+            case SE -> { oCol += 0.5; oRow -= 0.5; }
+            default -> { return null; }
+        }
+        return board.getRhombus((int)oCol, (int)oRow);
+    }
 
     // ── Coordinate arithmetic ─────────────────────────────────────────────
 
