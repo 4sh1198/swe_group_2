@@ -1,12 +1,16 @@
 package comp20050.qssboard.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class QuaxBoard {
     private ArrayList<Octagon> ocells; //
     private ArrayList<Rhombus> rcells; //
+    private ArrayList<Tile> blackTiles = new ArrayList<>();
+    private ArrayList<Tile> whiteTiles = new ArrayList<>();
+    private ArrayList<ArrayList<Tile>> blackChains = new ArrayList<>();
+    private ArrayList<ArrayList<Tile>> whiteChains = new ArrayList<>();
     private final int sideSize;
+    private boolean isBlackTurn = true;
 
     public QuaxBoard(int sideSize) {
         this.sideSize = sideSize;
@@ -51,4 +55,6 @@ public class QuaxBoard {
     }
 
     public int getSize() { return this.sideSize; }
+    public boolean isBlackTurn() { return this.isBlackTurn; }
+    public void setBlackTurn(boolean b) { this.isBlackTurn = b; }
 }

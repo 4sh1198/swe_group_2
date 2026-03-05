@@ -3,6 +3,7 @@ package comp20050.qssboard.controller;
 import comp20050.qssboard.model.Octagon;
 import comp20050.qssboard.model.QuaxBoard;
 import comp20050.qssboard.model.Rhombus;
+import comp20050.qssboard.model.TileState;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -10,7 +11,6 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.control.Button;
 
 public class GameController {
 
@@ -40,7 +40,6 @@ public class GameController {
         board = new QuaxBoard(CELLS);
         drawBoard();
         displayPlayerTurn();
-        createPieButton();
     }
 
     // Main draw method
@@ -68,7 +67,7 @@ public class GameController {
                 rhoShape.setStroke(RHO_STROKE);
                 rhoShape.setStrokeWidth(1.0);
                 rhoShape.setUserData(rho);
-                rhoShape.setOnMouseClicked(e -> onRhombusClicked((Rhombus) rhoShape.getUserData()));
+                rhoShape.setOnMouseClicked(e -> onRhombusClicked(rho, rhoShape));
                 boardPane.getChildren().add(rhoShape);
             }
         }
@@ -87,7 +86,7 @@ public class GameController {
                 octShape.setStroke(OCT_STROKE);
                 octShape.setStrokeWidth(1.5);
                 octShape.setUserData(oct);
-                octShape.setOnMouseClicked(e -> onOctagonClicked((Octagon) octShape.getUserData()));
+                octShape.setOnMouseClicked(e -> onOctagonClicked(oct,octShape));
                 boardPane.getChildren().add(octShape);
             }
         }
@@ -170,8 +169,6 @@ public class GameController {
     }
 
     private void displayPlayerTurn(){
-        String currentPlayer = "Black";
-
         boardPane.getChildren().removeIf(node -> "turnDisplay".equals(node.getUserData()));
 
         double displayHeight = 100;
@@ -183,7 +180,7 @@ public class GameController {
         displayBg.setUserData("turnDisplay");
         boardPane.getChildren().add(displayBg);
 
-        Color playerColor = currentPlayer.equalsIgnoreCase("Black") ? Color.BLACK : Color.WHITE;
+        Color playerColor = board.isBlackTurn() ? Color.BLACK : Color.WHITE;
 
         Polygon Oct = makeOctagon(xStart + RADIUS, yBottom + RADIUS);
         Oct.setFill(playerColor);
@@ -201,7 +198,7 @@ public class GameController {
         Rho.setUserData("turnDisplay");
         boardPane.getChildren().add(Rho);
 
-        Text turnText = new Text(currentPlayer.toUpperCase() + " to play");
+        Text turnText = new Text((board.isBlackTurn() ? "Black" : "White") + " to play");
         turnText.setFill(Color.BLACK);
         turnText.setFont(Font.font("Arial", 16));
         turnText.setX(rhombusX + RADIUS + 10);
@@ -209,34 +206,6 @@ public class GameController {
         turnText.setUserData("turnDisplay");
         boardPane.getChildren().add(turnText);
 
-    }
-
-    private void createPieButton(){
-        double pieWidth = 250;
-        double pieHeight = 40;
-
-        double pieX = BORDER + (3 * RADIUS) + 250;
-        double pieY = TOTAL_SIZE + 20;
-
-        Button button = new Button("Activate Pie Rule");
-        button.setLayoutX(pieX);
-        button.setLayoutY(pieY);
-        button.setFont(Font.font("Arial", 16));
-
-        button.setPrefHeight(pieHeight);
-        button.setPrefWidth(pieWidth);
-
-        button.setStyle("-fx-background-color: dodgerblue; -fx-text: black;");
-        button.setUserData("pieButton");
-
-
-       /*button.setOnAction(e -> {
-            ActivatePie();
-        });
-
-        */
-
-        boardPane.getChildren().add(button);
     }
 
     // Shape factories
@@ -273,13 +242,33 @@ public class GameController {
 
     // Event handlers
 
-   // private void on
+    private void onOctagonClicked(Octagon oct, Polygon shape) throws IllegalStateException {
+        if (oct.getState() == TileState.BLACK || oct.getState() == TileState.WHITE) {
+            throw new IllegalStateException("Cell is already occupied by a player");
+        }
 
-    private void onOctagonClicked(Octagon oct) {
+        // Update model
+        TileState newState = board.isBlackTurn() ? TileState.BLACK : TileState.WHITE;
+        oct.setState(newState);
+
+        // Update view (colour)
+        shape.setFill(newState == TileState.BLACK ? Color.BLACK : Color.WHITE);
+
+        // Update chains
+
         System.out.println("Clicked: " + oct);
+        board.setBlackTurn(!board.isBlackTurn());
+        displayPlayerTurn();
     }
 
-    private void onRhombusClicked(Rhombus rho) {
+    private void onRhombusClicked(Rhombus rho, Polygon shape) {
+        TileState newState = board.isBlackTurn() ? TileState.BLACK : TileState.WHITE;
+        rho.setState(newState);
+
+        shape.setFill(newState == TileState.BLACK ? Color.BLACK : Color.WHITE);
+
         System.out.println("Clicked: " + rho);
+        board.setBlackTurn(!board.isBlackTurn());
+        displayPlayerTurn();
     }
 }
