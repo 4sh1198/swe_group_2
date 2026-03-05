@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * The directions list allows callers to iterate over valid neighbour
  * directions without needing to know the internal storage structure.
  */
-public class Rhombus {
+public class Rhombus implements Tile {
 
     private final double[] centre;      // {col, row} — e.g. {0.5, 0.5}
     private TileState state;

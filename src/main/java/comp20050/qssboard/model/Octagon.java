@@ -12,14 +12,13 @@ import java.util.ArrayList;
  * Centre is stored as int[2] = {col, row}, matching the diagram.
  * add/subtract do vector arithmetic on centres for neighbour navigation.
  */
-public class Octagon {
+public class Octagon implements Tile {
 
     private final int[] centre;          // {col, row}
     private final int radius;
     private TileState state;
     private QuaxBoard board;
 
-    // One entry per Direction (size 8, indexed by Direction.ordinal())
     private final int[] directions;  // the 8 compass directions
     private final int[]  cellTypes;
 
