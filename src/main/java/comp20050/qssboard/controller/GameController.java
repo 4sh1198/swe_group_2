@@ -230,11 +230,12 @@ public class GameController {
         button.setUserData("pieButton");
 
 
-       /*button.setOnAction(e -> {
-            ActivatePie();
+        button.setOnAction(e -> {
+            // SR4: remove Pie Rule button after it is clicked
+            boardPane.getChildren().removeIf(
+                    node -> "pieButton".equals(node.getUserData())
+            );
         });
-
-        */
 
         boardPane.getChildren().add(button);
     }
