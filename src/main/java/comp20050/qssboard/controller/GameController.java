@@ -11,6 +11,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.control.Button;
 
 public class GameController {
 
@@ -40,6 +41,7 @@ public class GameController {
         board = new QuaxBoard(CELLS);
         drawBoard();
         displayPlayerTurn();
+        createPieButton();
     }
 
     // Main draw method
@@ -206,6 +208,35 @@ public class GameController {
         turnText.setUserData("turnDisplay");
         boardPane.getChildren().add(turnText);
 
+    }
+
+    private void createPieButton(){
+        double pieWidth = 250;
+        double pieHeight = 40;
+
+        double pieX = BORDER + (3 * RADIUS) + 250;
+        double pieY = TOTAL_SIZE + 20;
+
+        Button button = new Button("Activate Pie Rule");
+        button.setLayoutX(pieX);
+        button.setLayoutY(pieY);
+        button.setFont(Font.font("Arial", 16));
+
+        button.setPrefHeight(pieHeight);
+        button.setPrefWidth(pieWidth);
+
+        button.setStyle("-fx-background-color: dodgerblue; -fx-text: black;");
+        button.setUserData("pieButton");
+
+
+        button.setOnAction(e -> {
+            // SR4: remove Pie Rule button after it is clicked
+            boardPane.getChildren().removeIf(
+                    node -> "pieButton".equals(node.getUserData())
+            );
+        });
+
+        boardPane.getChildren().add(button);
     }
 
     // Shape factories
