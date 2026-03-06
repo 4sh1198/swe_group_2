@@ -210,7 +210,7 @@ public class GameController {
         turnText.setUserData("turnDisplay");
         boardPane.getChildren().add(turnText);
 
-        if(!board.isBlackTurn() && moveCount == 1 && !pieRuleUsed){
+        if(moveCount == 1){
             createPieButton();
         }
 
@@ -290,9 +290,9 @@ public class GameController {
 
     // Event handlers
 
-    private void onOctagonClicked(Octagon oct, Polygon shape) throws IllegalStateException {
-        if (oct.getState() == TileState.BLACK || oct.getState() == TileState.WHITE) {
-            throw new IllegalStateException("Cell is already occupied by a player");
+    private void onOctagonClicked(Octagon oct, Polygon shape) throws IllegalArgumentException {
+        if (oct.getState() != TileState.EMPTY) {
+            throw new IllegalArgumentException("Tile is already occupied by a player");
         }
 
         // Update model
@@ -310,7 +310,11 @@ public class GameController {
         displayPlayerTurn();
     }
 
-    private void onRhombusClicked(Rhombus rho, Polygon shape) {
+    private void onRhombusClicked(Rhombus rho, Polygon shape) throws IllegalArgumentException {
+        if (rho.getState() != TileState.EMPTY) {
+            throw new IllegalArgumentException("Tile is already occupied by a player");
+        }
+
         TileState newState = board.isBlackTurn() ? TileState.BLACK : TileState.WHITE;
         rho.setState(newState);
 
