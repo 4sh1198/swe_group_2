@@ -210,7 +210,7 @@ public class GameController {
         turnText.setUserData("turnDisplay");
         boardPane.getChildren().add(turnText);
 
-        if(moveCount == 1){
+        if(moveCount == 1 && !pieRuleUsed){
             createPieButton();
         }
 
@@ -236,6 +236,10 @@ public class GameController {
 
 
         button.setOnAction(e -> {
+            // SR4: remove Pie Rule button after it is clicked
+            boardPane.getChildren().removeIf(
+                    node -> "pieButton".equals(node.getUserData())
+            );
 
             pieRuleUsed = true;
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -243,10 +247,7 @@ public class GameController {
             alert.setHeaderText("Pie Rule:");
             alert.setContentText("Pie Rule used. Player 1 now plays WHITE");
             switchColor();
-            // SR4: remove Pie Rule button after it is clicked
-            boardPane.getChildren().removeIf(
-                    node -> "pieButton".equals(node.getUserData())
-            );
+
             displayPlayerTurn();
             alert.showAndWait();
         });
