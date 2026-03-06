@@ -12,6 +12,7 @@ public class QuaxBoard {
     private final int sideSize;
     private boolean isBlackTurn = true;
 
+
     public QuaxBoard(int sideSize) {
         this.sideSize = sideSize;
         this.ocells = new ArrayList<>(); //
@@ -57,4 +58,5 @@ public class QuaxBoard {
     public int getSize() { return this.sideSize; }
     public boolean isBlackTurn() { return this.isBlackTurn; }
     public void setBlackTurn(boolean b) { this.isBlackTurn = b; }
+
 }
