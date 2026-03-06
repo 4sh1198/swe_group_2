@@ -306,6 +306,11 @@ public class GameController {
 
         System.out.println("Clicked: " + oct);
         moveCount++;
+
+        if (moveCount > 1) {
+            boardPane.getChildren().removeIf(node -> "pieButton".equals(node.getUserData()));
+        }
+
         board.setBlackTurn(!board.isBlackTurn());
         displayPlayerTurn();
     }
@@ -322,6 +327,11 @@ public class GameController {
 
         System.out.println("Clicked: " + rho);
         moveCount++;
+
+        if (moveCount > 1) {
+            boardPane.getChildren().removeIf(node -> "pieButton".equals(node.getUserData()));
+        }
+
         board.setBlackTurn(!board.isBlackTurn());
         displayPlayerTurn();
     }

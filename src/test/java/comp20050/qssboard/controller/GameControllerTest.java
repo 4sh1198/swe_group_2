@@ -1,5 +1,11 @@
 package comp20050.qssboard.controller;
 
+import comp20050.qssboard.model.Octagon;
+import comp20050.qssboard.model.QuaxBoard;
+import comp20050.qssboard.model.Rhombus;
+import comp20050.qssboard.model.TileState;
+import javafx.scene.control.Button;
+import java.lang.reflect.Method;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -8,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -112,15 +119,121 @@ public class GameControllerTest {
 
     // checks that the text shows whose turn it is
     @Test
-    void turnDisplay_textIsWhiteToPlay() throws Exception {
+    void turnDisplay_textIsBlackToPlay() throws Exception {
         Pane pane = initControllerAndGetPane();
 
         boolean found = pane.getChildren().stream()
                 .filter(n -> n instanceof Text)
                 .map(n -> (Text) n)
-                .anyMatch(t -> t.getText().equals("WHITE to play"));
+                .anyMatch(t -> t.getText().equals("Black to play"));
 
         assertTrue(found);
+    }
+
+    // checks that clicking an empty octagon on the first move places a black tile
+    @Test
+    void firstOctagonClick_placesBlackTile() throws Exception {
+        GameController controller = initController();
+        QuaxBoard board = getBoard(controller);
+        Octagon oct = board.getOctagon(0, 0);
+
+        runFX(() -> {
+            try {
+                invokeOnOctagonClicked(controller, oct, new Polygon());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        assertEquals(TileState.BLACK, oct.getState());
+    }
+
+    // checks that after black moves, white can place a tile on a rhombus
+    @Test
+    void secondMoveOnRhombus() throws Exception {
+        GameController controller = initController();
+        QuaxBoard board = getBoard(controller);
+
+        Octagon firstMove = board.getOctagon(0, 0);
+        Rhombus rho = board.getRhombus(0.5, 0.5);
+
+        runFX(() -> {
+            try {
+                invokeOnOctagonClicked(controller, firstMove, new Polygon());
+                invokeOnRhombusClicked(controller, rho, new Polygon());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        assertEquals(TileState.WHITE, rho.getState());
+    }
+
+
+
+    // checks that clicking an already occupied octagon throws an exception
+    @Test
+    void OccupiedOctagonThrowsException() throws Exception {
+        GameController controller = initController();
+        QuaxBoard board = getBoard(controller);
+
+        Octagon oct = board.getOctagon(0, 0);
+
+        // make the tile occupied before clicking it
+        oct.setState(TileState.BLACK);
+
+        assertThrows(Exception.class, () -> {
+            invokeOnOctagonClicked(controller, oct, new Polygon());
+        });
+    }
+
+
+    // checks that the pie rule button appears after the first move
+    @Test
+    void pieButtonAfterFirstMove() throws Exception {
+        GameController controller = initController();
+        Pane pane = getPane(controller);
+        QuaxBoard board = getBoard(controller);
+
+        Octagon oct = board.getOctagon(0, 0);
+
+        runFX(() -> {
+            try {
+                invokeOnOctagonClicked(controller, oct, new Polygon());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        boolean found = pane.getChildren().stream()
+                .anyMatch(n -> "pieButton".equals(n.getUserData()));
+
+        assertTrue(found);
+    }
+
+    // checks that the pie rule button disappears after white makes the next move
+    @Test
+    void pieButtonDisappearsAfterSecondMove() throws Exception {
+        GameController controller = initController();
+        Pane pane = getPane(controller);
+        QuaxBoard board = getBoard(controller);
+
+        Octagon firstMove = board.getOctagon(0, 0);
+        Octagon secondMove = board.getOctagon(1, 0);
+
+        runFX(() -> {
+            try {
+                invokeOnOctagonClicked(controller, firstMove, new Polygon());
+                invokeOnOctagonClicked(controller, secondMove, new Polygon());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        boolean found = pane.getChildren().stream()
+                .anyMatch(n -> "pieButton".equals(n.getUserData()));
+
+        assertFalse(found);
     }
 
 
@@ -155,5 +268,38 @@ public class GameControllerTest {
             }
         }
         return map;
+    }
+
+
+    private static GameController initController() throws Exception {
+        GameController controller = new GameController();
+        Pane pane = new Pane();
+        injectPane(controller, pane);
+        runFX(controller::initialize);
+        return controller;
+    }
+
+    private static Pane getPane(GameController controller) throws Exception {
+        Field f = GameController.class.getDeclaredField("boardPane");
+        f.setAccessible(true);
+        return (Pane) f.get(controller);
+    }
+
+    private static QuaxBoard getBoard(GameController controller) throws Exception {
+        Field f = GameController.class.getDeclaredField("board");
+        f.setAccessible(true);
+        return (QuaxBoard) f.get(controller);
+    }
+
+    private static void invokeOnOctagonClicked(GameController controller, Octagon oct, Polygon shape) throws Exception {
+        Method m = GameController.class.getDeclaredMethod("onOctagonClicked", Octagon.class, Polygon.class);
+        m.setAccessible(true);
+        m.invoke(controller, oct, shape);
+    }
+
+    private static void invokeOnRhombusClicked(GameController controller, Rhombus rho, Polygon shape) throws Exception {
+        Method m = GameController.class.getDeclaredMethod("onRhombusClicked", Rhombus.class, Polygon.class);
+        m.setAccessible(true);
+        m.invoke(controller, rho, shape);
     }
 }
