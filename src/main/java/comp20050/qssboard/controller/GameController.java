@@ -5,6 +5,7 @@ import comp20050.qssboard.model.QuaxBoard;
 import comp20050.qssboard.model.Rhombus;
 import comp20050.qssboard.model.TileState;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -237,12 +238,17 @@ public class GameController {
         button.setOnAction(e -> {
 
             pieRuleUsed = true;
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Quax");
+            alert.setHeaderText("Pie Rule:");
+            alert.setContentText("Pie Rule used. Player 1 now plays WHITE");
             switchColor();
             // SR4: remove Pie Rule button after it is clicked
             boardPane.getChildren().removeIf(
                     node -> "pieButton".equals(node.getUserData())
             );
             displayPlayerTurn();
+            alert.showAndWait();
         });
         boardPane.getChildren().add(button);
     }
