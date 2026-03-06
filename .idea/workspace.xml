@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="Corrections to board and tile color">
+    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="adding button without functionality">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/Rhombus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/Rhombus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/QuaxBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/QuaxBoard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +49,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/4sh1198/swe_group_2.git&quot;,
-    &quot;accountId&quot;: &quot;34187012-c06b-47c4-aecf-db76c2d22c5d&quot;
+    &quot;accountId&quot;: &quot;fc835948-79d9-41cf-a7e5-559f561ee27b&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -67,7 +68,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "sprint2-Sharva",
+    "git-widget-placeholder": "sprint2-Ash",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/sharv/OneDrive/Desktop/Uni Docs/Java Lab/QSSBoard",
@@ -107,20 +108,18 @@
       <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/QSSBoard_jar/QSSBoard.jar" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.Launcher" />
+      <item itemvalue="JAR Application.QSSBoard.jar" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Launcher" />
         <item itemvalue="JAR Application.QSSBoard.jar" />
+        <item itemvalue="Application.Launcher" />
+        <item itemvalue="JAR Application.QSSBoard.jar" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -170,17 +169,37 @@
       <option name="project" value="LOCAL" />
       <updated>1771690625457</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="adding button without functionality">
+      <option name="closed" value="true" />
+      <created>1772725964304</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1772725964304</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feature 3 implemented" />
     <MESSAGE value="minor corrections" />
     <MESSAGE value="minor corrections&#10;create artifact Board.jar" />
     <MESSAGE value="Corrections to board and tile color" />
-    <option name="LAST_COMMIT_MESSAGE" value="Corrections to board and tile color" />
+    <MESSAGE value="adding button without functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding button without functionality" />
   </component>
 </project>

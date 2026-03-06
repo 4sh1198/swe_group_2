@@ -11,6 +11,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.control.Button;
 
 public class GameController {
 
@@ -34,6 +35,8 @@ public class GameController {
     @FXML private Pane boardPane;
 
     private QuaxBoard board;
+    private int moveCount = 0;
+    private boolean pieRuleUsed = false;
 
     @FXML
     public void initialize() {
@@ -206,8 +209,47 @@ public class GameController {
         turnText.setUserData("turnDisplay");
         boardPane.getChildren().add(turnText);
 
+        if(!board.isBlackTurn() && moveCount == 1 && !pieRuleUsed){
+            createPieButton();
+        }
+
     }
 
+    private void createPieButton() {
+        double pieWidth = 250;
+        double pieHeight = 40;
+
+        double pieX = BORDER + (3 * RADIUS) + 250;
+        double pieY = TOTAL_SIZE + 20;
+
+        Button button = new Button("Activate Pie Rule");
+        button.setLayoutX(pieX);
+        button.setLayoutY(pieY);
+        button.setFont(Font.font("Arial", 16));
+
+        button.setPrefHeight(pieHeight);
+        button.setPrefWidth(pieWidth);
+
+        button.setStyle("-fx-background-color: dodgerblue; -fx-text-fill: black;");
+        button.setUserData("pieButton");
+
+
+        button.setOnAction(e -> {
+
+            pieRuleUsed = true;
+            switchColor();
+            // SR4: remove Pie Rule button after it is clicked
+            boardPane.getChildren().removeIf(
+                    node -> "pieButton".equals(node.getUserData())
+            );
+            displayPlayerTurn();
+        });
+        boardPane.getChildren().add(button);
+    }
+
+    public void switchColor(){
+        board.setBlackTurn(false);
+    }
     // Shape factories
 
     /**
@@ -257,6 +299,7 @@ public class GameController {
         // Update chains
 
         System.out.println("Clicked: " + oct);
+        moveCount++;
         board.setBlackTurn(!board.isBlackTurn());
         displayPlayerTurn();
     }
@@ -268,6 +311,7 @@ public class GameController {
         shape.setFill(newState == TileState.BLACK ? Color.BLACK : Color.WHITE);
 
         System.out.println("Clicked: " + rho);
+        moveCount++;
         board.setBlackTurn(!board.isBlackTurn());
         displayPlayerTurn();
     }
