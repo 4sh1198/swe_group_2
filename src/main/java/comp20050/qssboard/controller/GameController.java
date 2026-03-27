@@ -37,7 +37,9 @@ public class GameController {
 
     private QuaxBoard board;
     private int moveCount = 0;
+
     private boolean pieRuleUsed = false;
+    private boolean gameOver = false;
 
     @FXML
     public void initialize() {
@@ -312,6 +314,13 @@ public class GameController {
             boardPane.getChildren().removeIf(node -> "pieButton".equals(node.getUserData()));
         }
 
+        // Win checking
+        if (board.checkWin(newState)) {
+            displayWinner(newState);
+            return;
+        }
+
+
         board.setBlackTurn(!board.isBlackTurn());
         displayPlayerTurn();
     }
@@ -333,7 +342,23 @@ public class GameController {
             boardPane.getChildren().removeIf(node -> "pieButton".equals(node.getUserData()));
         }
 
+        // Win checking
+        if (board.checkWin(newState)) {
+            displayWinner(newState);
+            return;
+        }
+
+
         board.setBlackTurn(!board.isBlackTurn());
         displayPlayerTurn();
+    }
+
+    private void displayWinner(TileState winner) {
+        gameOver = true;
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Quax");
+        alert.setHeaderText("Game Over!");
+        alert.setContentText((winner == TileState.BLACK ? "Black wins!" : "White wins!"));
+        alert.showAndWait();
     }
 }
