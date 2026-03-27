@@ -186,213 +186,118 @@ public class QuaxBoard {
         ArrayList<Tile> neighbors = new ArrayList<>();
 
         if (tile instanceof Octagon) {
-            Octagon oct = (Octagon) tile;
-            int col = (int) oct.getCol();
-            int row = (int) oct.getRow();
+            int col = (int) ((Octagon) tile).getCol();
+            int row = (int) ((Octagon) tile).getRow();
 
-            // Mark current octagon as visited
-            visitedOctagons[row][col] = true;
+            // Orthogonal (N/S/E/W) octagon neighbors
+            if (row > 0)         neighbors.add(getOctagon(col, row - 1));
+            if (row < CELLS - 1) neighbors.add(getOctagon(col, row + 1));
+            if (col > 0)         neighbors.add(getOctagon(col - 1, row));
+            if (col < CELLS - 1) neighbors.add(getOctagon(col + 1, row));
 
-            // Check orthogonal neighbors (N/S/E/W)
-            if (row > 0 && !visitedOctagons[row - 1][col]) {
-                Octagon north = getOctagon(col, row - 1);
-                if (north.getState() != TileState.EMPTY && north.getState() == tile.getState()) {
-                    neighbors.add(north);
-                }
-            }
-            if (row < CELLS - 1 && !visitedOctagons[row + 1][col]) {
-                Octagon south = getOctagon(col, row + 1);
-                if (south.getState() != TileState.EMPTY && south.getState() == tile.getState()) {
-                    neighbors.add(south);
-                }
-            }
-            if (col > 0 && !visitedOctagons[row][col - 1]) {
-                Octagon west = getOctagon(col - 1, row);
-                if (west.getState() != TileState.EMPTY && west.getState() == tile.getState()) {
-                    neighbors.add(west);
-                }
-            }
-            if (col < CELLS - 1 && !visitedOctagons[row][col + 1]) {
-                Octagon east = getOctagon(col + 1, row);
-                if (east.getState() != TileState.EMPTY && east.getState() == tile.getState()) {
-                    neighbors.add(east);
-                }
-            }
+            // Diagonal (NW/NE/SW/SE) rhombus neighbors
+            if (row > 0 && col > 0)                 neighbors.add(getRhombus(col - 0.5, row - 0.5));
+            if (row > 0 && col < CELLS - 1)         neighbors.add(getRhombus(col + 0.5, row - 0.5));
+            if (row < CELLS - 1 && col > 0)         neighbors.add(getRhombus(col - 0.5, row + 0.5));
+            if (row < CELLS - 1 && col < CELLS - 1) neighbors.add(getRhombus(col + 0.5, row + 0.5));
 
-            // Check diagonal neighbors (NE/SE/SW/NW)
-            if (row > 0 && col > 0 && !visitedRhombuses[row - 1][col - 1]) {
-                Rhombus nw = getRhombus(col - 0.5, row - 0.5);
-                if (nw.getState() != TileState.EMPTY && nw.getState() == tile.getState()) {
-                    neighbors.add(nw);
-                }
-            }
-            if (row > 0 && col < CELLS - 1 && !visitedRhombuses[row - 1][col]) {
-                Rhombus ne = getRhombus(col + 0.5, row - 0.5);
-                if (ne.getState() != TileState.EMPTY && ne.getState() == tile.getState()) {
-                    neighbors.add(ne);
-                }
-            }
-            if (row < CELLS - 1 && col > 0 && !visitedRhombuses[row][col - 1]) {
-                Rhombus sw = getRhombus(col - 0.5, row + 0.5);
-                if (sw.getState() != TileState.EMPTY && sw.getState() == tile.getState()) {
-                    neighbors.add(sw);
-                }
-            }
-            if (row < CELLS - 1 && col < CELLS - 1 && !visitedRhombuses[row][col]) {
-                Rhombus se = getRhombus(col + 0.5, row + 0.5);
-                if (se.getState() != TileState.EMPTY && se.getState() == tile.getState()) {
-                    neighbors.add(se);
-                }
-            }
-        }
-        else if (tile instanceof Rhombus) {
-            Rhombus rho = (Rhombus) tile;
-            int col = (int) (rho.getCol() * 2); // Convert 0.5 → 1, 1.5 → 3, etc.
-            int row = (int) (rho.getRow() * 2);
+        } else if (tile instanceof Rhombus) {
+            // (int) cast floors 0.5→0, 1.5→1, ..., 9.5→9 — the correct array index
+            int c = (int) ((Rhombus) tile).getCol();
+            int r = (int) ((Rhombus) tile).getRow();
 
-            // Mark current rhombus as visited
-            visitedRhombuses[row / 2][col / 2] = true;
-
-            // Check diagonal neighbors (NE/SE/SW/NW)
-            if (row > 1 && col > 1 && !visitedOctagons[row / 2 - 1][col / 2 - 1]) {
-                Octagon nw = getOctagon(col / 2 - 1, row / 2 - 1);
-                if (nw.getState() != TileState.EMPTY && nw.getState() == tile.getState()) {
-                    neighbors.add(nw);
-                }
-            }
-            if (row > 1 && col < CELLS * 2 - 1 && !visitedOctagons[row / 2 - 1][col / 2]) {
-                Octagon ne = getOctagon(col / 2, row / 2 - 1);
-                if (ne.getState() != TileState.EMPTY && ne.getState() == tile.getState()) {
-                    neighbors.add(ne);
-                }
-            }
-            if (row < CELLS * 2 - 1 && col > 1 && !visitedOctagons[row / 2][col / 2 - 1]) {
-                Octagon sw = getOctagon(col / 2 - 1, row / 2);
-                if (sw.getState() != TileState.EMPTY && sw.getState() == tile.getState()) {
-                    neighbors.add(sw);
-                }
-            }
-            if (row < CELLS * 2 - 1 && col < CELLS * 2 - 1 && !visitedOctagons[row / 2][col / 2]) {
-                Octagon se = getOctagon(col / 2, row / 2);
-                if (se.getState() != TileState.EMPTY && se.getState() == tile.getState()) {
-                    neighbors.add(se);
-                }
-            }
+            // All four surrounding octagons always exist — no bounds checks needed
+            neighbors.add(getOctagon(c,     r    )); // NW
+            neighbors.add(getOctagon(c + 1, r    )); // NE
+            neighbors.add(getOctagon(c,     r + 1)); // SW
+            neighbors.add(getOctagon(c + 1, r + 1)); // SE
         }
 
         return neighbors;
     }
 
     public boolean checkWin(TileState player) {
-        // Reset visited arrays before each check
-        for (int r = 0; r < CELLS; r++) {
-            for (int c = 0; c < CELLS; c++) {
-                visitedOctagons[r][c] = false;
-            }
-        }
-        for (int r = 0; r < CELLS - 1; r++) {
-            for (int c = 0; c < CELLS - 1; c++) {
-                visitedRhombuses[r][c] = false;
-            }
-        }
+        boolean[][] visitedOct = new boolean[CELLS][CELLS];          // 11x11
+        boolean[][] visitedRho = new boolean[CELLS - 1][CELLS - 1];  // 10x10
+        Queue<Tile> queue = new LinkedList<>();
 
         if (player == TileState.BLACK) {
-            // Check if BLACK has connected top and bottom edges
-            Queue<Tile> queue = new LinkedList<>();
-
-            // Start BFS from all bottom edge tiles of the player
+            // Seed from all BLACK tiles on the bottom row
             for (int c = 0; c < CELLS; c++) {
                 Octagon oct = getOctagon(c, 0);
                 if (oct.getState() == TileState.BLACK) {
+                    visitedOct[0][c] = true;
                     queue.add(oct);
-                    visitedOctagons[0][c] = true;
-                }
-            }
-            for (int c = 0; c < CELLS - 1; c++) {
-                Rhombus rho = getRhombus(c + 0.5, 0.5);
-                if (rho.getState() == TileState.BLACK) {
-                    queue.add(rho);
-                    visitedRhombuses[0][c] = true;
                 }
             }
 
-            // If no starting tiles, can't win
-            if (queue.isEmpty()) {
-                return false;
-            }
-
-            // Perform BFS
             while (!queue.isEmpty()) {
                 Tile current = queue.poll();
-                ArrayList<Tile> neighbors = getNeighbors(current);
 
-                for (Tile neighbor : neighbors) {
-                    // Check if neighbor is on the top edge
+                // Win: an octagon on the opposite (top) edge was reached
+                if (current instanceof Octagon && ((Octagon) current).getRow() == CELLS - 1) {
+                    return true;
+                }
+
+                for (Tile neighbor : getNeighbors(current)) {
+                    if (neighbor.getState() != TileState.BLACK) continue;
+
                     if (neighbor instanceof Octagon) {
-                        Octagon oct = (Octagon) neighbor;
-                        if (oct.getRow() == CELLS - 1) {
-                            return true;
+                        int r = (int) ((Octagon) neighbor).getRow();
+                        int c = (int) ((Octagon) neighbor).getCol();
+                        if (!visitedOct[r][c]) {
+                            visitedOct[r][c] = true;
+                            queue.add(neighbor);
                         }
-                    } else if (neighbor instanceof Rhombus) {
-                        Rhombus rho = (Rhombus) neighbor;
-                        if (rho.getRow() == CELLS - 0.5) {
-                            return true;
+                    } else {
+                        int r = (int) ((Rhombus) neighbor).getRow();
+                        int c = (int) ((Rhombus) neighbor).getCol();
+                        if (!visitedRho[r][c]) {
+                            visitedRho[r][c] = true;
+                            queue.add(neighbor);
                         }
                     }
-                    queue.add(neighbor);
                 }
             }
 
-            return false;
-        }
-        else if (player == TileState.WHITE) {
-            // Check if WHITE has connected left and right edges
-            Queue<Tile> queue = new LinkedList<>();
-
-            // Start BFS from all left edge tiles of the player
+        } else if (player == TileState.WHITE) {
+            // Seed from all WHITE tiles on the left column
             for (int r = 0; r < CELLS; r++) {
                 Octagon oct = getOctagon(0, r);
                 if (oct.getState() == TileState.WHITE) {
+                    visitedOct[r][0] = true;
                     queue.add(oct);
-                    visitedOctagons[r][0] = true;
-                }
-            }
-            for (int r = 0; r < CELLS - 1; r++) {
-                Rhombus rho = getRhombus(0.5, r + 0.5);
-                if (rho.getState() == TileState.WHITE) {
-                    queue.add(rho);
-                    visitedRhombuses[r][0] = true;
                 }
             }
 
-            // If no starting tiles, can't win
-            if (queue.isEmpty()) {
-                return false;
-            }
-
-            // Perform BFS
             while (!queue.isEmpty()) {
                 Tile current = queue.poll();
-                ArrayList<Tile> neighbors = getNeighbors(current);
 
-                for (Tile neighbor : neighbors) {
-                    // Check if neighbor is on the right edge
+                // Win: an octagon on the opposite (right) edge was reached
+                if (current instanceof Octagon && ((Octagon) current).getCol() == CELLS - 1) {
+                    return true;
+                }
+
+                for (Tile neighbor : getNeighbors(current)) {
+                    if (neighbor.getState() != TileState.WHITE) continue;
+
                     if (neighbor instanceof Octagon) {
-                        Octagon oct = (Octagon) neighbor;
-                        if (oct.getCol() == CELLS - 1) {
-                            return true;
+                        int r = (int) ((Octagon) neighbor).getRow();
+                        int c = (int) ((Octagon) neighbor).getCol();
+                        if (!visitedOct[r][c]) {
+                            visitedOct[r][c] = true;
+                            queue.add(neighbor);
                         }
-                    } else if (neighbor instanceof Rhombus) {
-                        Rhombus rho = (Rhombus) neighbor;
-                        if (rho.getCol() == CELLS - 0.5) {
-                            return true;
+                    } else {
+                        int r = (int) ((Rhombus) neighbor).getRow();
+                        int c = (int) ((Rhombus) neighbor).getCol();
+                        if (!visitedRho[r][c]) {
+                            visitedRho[r][c] = true;
+                            queue.add(neighbor);
                         }
                     }
-                    queue.add(neighbor);
                 }
             }
-
-            return false;
         }
 
         return false;

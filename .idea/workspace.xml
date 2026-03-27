@@ -9,9 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="add alert if pie rule used">
+    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="update jarfile to recent commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/QuaxBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/QuaxBoard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,7 +89,7 @@
       <recent name="C:\Users\sharv\OneDrive\Desktop\Uni Docs\Java Lab\QSSBoard\" />
     </key>
   </component>
-  <component name="RunManager" selected="JAR Application.QSSBoard.jar">
+  <component name="RunManager" selected="Application.Launcher">
     <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="comp20050.qssboard.Launcher" />
       <module name="QSSBoard" />
@@ -114,8 +113,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JAR Application.QSSBoard.jar" />
         <item itemvalue="Application.Launcher" />
+        <item itemvalue="JAR Application.QSSBoard.jar" />
         <item itemvalue="Application.Launcher" />
         <item itemvalue="JAR Application.QSSBoard.jar" />
       </list>
@@ -146,7 +145,7 @@
       <workItem from="1771689797710" duration="1287000" />
       <workItem from="1772811150490" duration="2130000" />
       <workItem from="1772816908504" duration="307000" />
-      <workItem from="1774627062414" duration="5187000" />
+      <workItem from="1774627062414" duration="6582000" />
     </task>
     <task id="LOCAL-00001" summary="feature 3 implemented">
       <option name="closed" value="true" />
@@ -196,7 +195,23 @@
       <option name="project" value="LOCAL" />
       <updated>1772812670235</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="add win checking functionality for black and white. &#10;&#10;the functionality is minimum viable right now, and may be improved upon later">
+      <option name="closed" value="true" />
+      <created>1774650148548</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1774650148548</updated>
+    </task>
+    <task id="LOCAL-00008" summary="update jarfile to recent commit">
+      <option name="closed" value="true" />
+      <created>1774650218008</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1774650218008</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,7 +235,9 @@
     <MESSAGE value="Corrections to board and tile color" />
     <MESSAGE value="adding button without functionality" />
     <MESSAGE value="add alert if pie rule used" />
-    <option name="LAST_COMMIT_MESSAGE" value="add alert if pie rule used" />
+    <MESSAGE value="add win checking functionality for black and white. &#10;&#10;the functionality is minimum viable right now, and may be improved upon later" />
+    <MESSAGE value="update jarfile to recent commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="update jarfile to recent commit" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
