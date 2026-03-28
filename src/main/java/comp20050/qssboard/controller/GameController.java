@@ -13,6 +13,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
+import javafx.application.Platform;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
+
+import java.util.Optional;
 
 public class GameController {
 
@@ -41,12 +46,60 @@ public class GameController {
     private boolean pieRuleUsed = false;
     private boolean gameOver = false;
 
+    private TileState humanColor = TileState.BLACK;
+    private TileState botColor = TileState.WHITE;
+    private boolean botGame = true;
+
     @FXML
     public void initialize() {
         board = new QuaxBoard(CELLS);
+
+        chooseBotColourAtStart();
+
         drawBoard();
         displayPlayerTurn();
+
+        Platform.runLater(this::updateWindowTitle);
     }
+
+    // ask the player what colour they want to play
+    private void chooseBotColourAtStart() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Quax");
+        alert.setHeaderText("Human V Bot");
+        alert.setContentText("Choose your colour:");
+
+        ButtonType blackButton = new ButtonType("BLACK");
+        ButtonType whiteButton = new ButtonType("WHITE");
+
+        alert.getButtonTypes().setAll(blackButton, whiteButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == whiteButton) {
+            humanColor = TileState.WHITE;
+            botColor = TileState.BLACK;
+        } else {
+            humanColor = TileState.BLACK;
+            botColor = TileState.WHITE;
+        }
+
+
+        // Show a confirmation popup so player knows their colour
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setTitle("Quax");
+        info.setHeaderText("Bot player added");
+        info.setContentText("You are " + humanColor + ". Bot is " + botColor + ".");
+        info.showAndWait();
+    }
+
+    private void updateWindowTitle() {
+        if (botGame && boardPane.getScene() != null && boardPane.getScene().getWindow() instanceof Stage stage) {
+            stage.setTitle("Quax (Human V Bot)");
+        }
+    }
+
+
 
     // Main draw method
 
