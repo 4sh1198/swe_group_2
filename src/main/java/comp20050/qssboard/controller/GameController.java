@@ -31,7 +31,7 @@ public class GameController {
     private static final Color OCT_STROKE  = Color.BLACK;
     private static final Color RHO_FILL    = Color.ORANGE;
     private static final Color RHO_STROKE  = Color.BLACK;
-    private static final Color BOARD_BG    = Color.WHITE; // visible in the gaps at edges
+    private static final Color BOARD_BG    = Color.web("#564138"); // visible in the gaps at edges
 
     @FXML private Pane boardPane;
 
@@ -107,23 +107,30 @@ public class GameController {
     // Border strips
 
     private void drawBorders() {
-        // Top & bottom (dark)
-        Rectangle topStrip = new Rectangle(0, 0, TOTAL_SIZE, BORDER);
-        topStrip.setFill(Color.web("#2A2A2A"));
-        boardPane.getChildren().add(topStrip);
+        // Edge strips (excluding corners)
+        Rectangle topStrip    = new Rectangle(BORDER, 0,   TOTAL_SIZE-2*BORDER, BORDER);
+        Rectangle bottomStrip = new Rectangle(BORDER, TOTAL_SIZE-BORDER,  TOTAL_SIZE-2*BORDER, BORDER);
+        Rectangle leftStrip   = new Rectangle(0, BORDER,   BORDER, TOTAL_SIZE-2*BORDER);
+        Rectangle rightStrip  = new Rectangle(TOTAL_SIZE-BORDER, BORDER, BORDER, TOTAL_SIZE-2*BORDER);
+        topStrip.setFill(Color.BLACK);    bottomStrip.setFill(Color.BLACK);
+        leftStrip.setFill(Color.web("#F5F1E8"));   rightStrip.setFill(Color.web("#F5F1E8"));
+        boardPane.getChildren().addAll(topStrip, bottomStrip, leftStrip, rightStrip);
 
-        Rectangle bottomStrip = new Rectangle(0, TOTAL_SIZE - BORDER, TOTAL_SIZE, BORDER);
-        bottomStrip.setFill(Color.web("#2A2A2A"));
-        boardPane.getChildren().add(bottomStrip);
+        //Black and white corners for more intuitive UI
+        // Top-left corner
+        Polygon tlB = new Polygon(0.0, 0.0, BORDER, 0.0, BORDER, BORDER);   tlB.setFill(Color.BLACK);
+        Polygon tlW = new Polygon(0.0, 0.0, 0.0, BORDER, BORDER, BORDER);   tlW.setFill(Color.web("#F5F1E8"));
+        // Top-right corner
+        Polygon trB = new Polygon(TOTAL_SIZE-BORDER, 0.0, TOTAL_SIZE, 0.0, TOTAL_SIZE-BORDER, BORDER); trB.setFill(Color.BLACK);
+        Polygon trW = new Polygon(TOTAL_SIZE, 0.0, TOTAL_SIZE, BORDER, TOTAL_SIZE-BORDER, BORDER); trW.setFill(Color.web("#F5F1E8"));
+        // Bottom-left corner
+        Polygon blB = new Polygon(0.0, TOTAL_SIZE, BORDER, TOTAL_SIZE, BORDER, TOTAL_SIZE-BORDER); blB.setFill(Color.BLACK);
+        Polygon blW = new Polygon(0.0, TOTAL_SIZE-BORDER, 0.0, TOTAL_SIZE, BORDER, TOTAL_SIZE-BORDER); blW.setFill(Color.web("#F5F1E8"));
+        // Bottom-right corner
+        Polygon brB = new Polygon(TOTAL_SIZE-BORDER, TOTAL_SIZE, TOTAL_SIZE, TOTAL_SIZE, TOTAL_SIZE-BORDER, TOTAL_SIZE-BORDER); brB.setFill(Color.BLACK);
+        Polygon brW = new Polygon(TOTAL_SIZE, TOTAL_SIZE-BORDER, TOTAL_SIZE, TOTAL_SIZE, TOTAL_SIZE-BORDER, TOTAL_SIZE-BORDER); brW.setFill(Color.web("#F5F1E8"));
 
-        // Left & right (grey)
-        Rectangle leftStrip = new Rectangle(0, 0, BORDER, TOTAL_SIZE);
-        leftStrip.setFill(Color.SADDLEBROWN);
-        boardPane.getChildren().add(leftStrip);
-
-        Rectangle rightStrip = new Rectangle(TOTAL_SIZE - BORDER, 0, BORDER, TOTAL_SIZE);
-        rightStrip.setFill(Color.SADDLEBROWN);
-        boardPane.getChildren().add(rightStrip);
+        boardPane.getChildren().addAll(tlB,tlW, trB,trW, blB,blW, brB,brW);
     }
 
     // Column / Row labels
