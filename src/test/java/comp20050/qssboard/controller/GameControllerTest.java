@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import java.lang.reflect.Method;
 import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -21,6 +22,7 @@ import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import static com.sun.javafx.reflect.FieldUtil.getField;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameControllerTest {
@@ -236,9 +238,82 @@ public class GameControllerTest {
         assertFalse(found);
     }
 
+    // Win detection test for when black wins
+    @Test
+    void blackWinDetected() throws Exception{
+        GameController controller = initController();
+        QuaxBoard board = getBoard(controller);
 
+        for (int i = 0; i < 11; i++){
+            board.getOctagon(5, i).setState(TileState.BLACK);
+        }
+        assertTrue(board.checkWin(TileState.BLACK));
+    }
+
+    // Win detection tests for when white wins
+    @Test
+    void whiteWinDetected() throws Exception{
+        GameController controller = initController();
+        QuaxBoard board = getBoard(controller);
+
+        for (int i = 0; i < 11; i++){
+            board.getOctagon(i, 5).setState(TileState.WHITE);
+        }
+        assertTrue(board.checkWin(TileState.WHITE));
+
+    }
+
+    // Win detection when there is no winner
+    @Test
+    void noWinDetected() throws Exception{
+        GameController controller = initController();
+        QuaxBoard board = getBoard(controller);
+
+        board.getOctagon(0, 0).setState(TileState.BLACK);
+        board.getOctagon(1,1).setState(TileState.WHITE);
+
+        assertFalse(board.checkWin(TileState.BLACK));
+    }
+
+    // testing if bot and humans are assigned their respective colours
+    @Test
+    void choosingWhiteAtStart() throws Exception{
+        GameController controller = initController();
+
+        ButtonType white = new ButtonType("White");
+
+        runFX(() -> controller.applyChosenColor(white));
+
+        TileState human = getField(controller, "humanColor");
+        TileState bot = getField(controller, "botColor");
+
+        assertEquals(TileState.WHITE, human);
+        assertEquals(TileState.BLACK, bot);
+    }
+
+    @Test
+    void choosingBlackAtStart() throws Exception{
+        GameController controller = initController();
+
+        ButtonType black = new ButtonType("blck");
+
+        runFX(() -> controller.applyChosenColor(black));
+
+        TileState human = getField(controller, "humanColor");
+        TileState bot = getField(controller, "botColor");
+
+        assertEquals(TileState.BLACK, human);
+        assertEquals(TileState.WHITE, bot);
+    }
+
+    private static <T> T getField(GameController controller, String name) throws Exception{
+        Field f = GameController.class.getDeclaredField(name);
+        f.setAccessible(true);
+        return (T) f.get(controller);
+    }
     private static Pane initControllerAndGetPane() throws Exception {
         GameController controller = new GameController();
+        controller.setTestMode(true);
         Pane pane = new Pane();
         injectPane(controller, pane);
         runFX(controller::initialize);
@@ -273,6 +348,7 @@ public class GameControllerTest {
 
     private static GameController initController() throws Exception {
         GameController controller = new GameController();
+        controller.setTestMode(true);
         Pane pane = new Pane();
         injectPane(controller, pane);
         runFX(controller::initialize);
