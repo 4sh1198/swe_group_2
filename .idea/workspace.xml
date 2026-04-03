@@ -9,10 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="update jarfile to recent commit">
+    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="added test and ammended previous tests to account for popup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/controller/GameControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/controller/GameControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/QSSBoard_jar/QSSBoard.jar" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +90,7 @@
       <recent name="C:\Users\sharv\OneDrive\Desktop\Uni Docs\Java Lab\QSSBoard\" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.GameControllerTest">
+  <component name="RunManager" selected="Application.Launcher">
     <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="comp20050.qssboard.Launcher" />
       <module name="QSSBoard" />
@@ -131,8 +130,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.GameControllerTest" />
         <item itemvalue="Application.Launcher" />
+        <item itemvalue="JUnit.GameControllerTest" />
         <item itemvalue="JAR Application.QSSBoard.jar" />
         <item itemvalue="Application.Launcher" />
         <item itemvalue="JAR Application.QSSBoard.jar" />
@@ -222,7 +221,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774650218008</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="added test and ammended previous tests to account for popup">
+      <option name="closed" value="true" />
+      <created>1775238536691</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1775238536691</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,7 +255,9 @@
     <MESSAGE value="add alert if pie rule used" />
     <MESSAGE value="add win checking functionality for black and white. &#10;&#10;the functionality is minimum viable right now, and may be improved upon later" />
     <MESSAGE value="update jarfile to recent commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="update jarfile to recent commit" />
+    <MESSAGE value="added test and ammended previous tests to account for popup" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/main'" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
