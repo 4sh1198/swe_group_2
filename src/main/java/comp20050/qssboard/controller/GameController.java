@@ -46,6 +46,11 @@ public class GameController {
     private TileState humanColor = TileState.BLACK;
     private TileState botColor = TileState.WHITE;
     private boolean botGame = true;
+    private boolean testMode = false;
+
+    public void setTestMode(boolean testMode){
+        this.testMode = testMode;
+    }
 
     private MonteCarloSimulator simulator = new MonteCarloSimulator(1000000);
 
@@ -53,15 +58,19 @@ public class GameController {
     public void initialize() {
         board = new QuaxBoard(CELLS);
 
-        chooseBotColourAtStart();
-
         drawBoard();
         displayPlayerTurn();
         if (botColor == TileState.BLACK) {
             runAnalysis();
         }
 
-        Platform.runLater(this::updateWindowTitle);
+        if(!testMode) {
+            Platform.runLater(() -> {
+                chooseBotColourAtStart();
+                updateWindowTitle();
+            });
+        }
+
     }
 
     // ask the player what colour they want to play
@@ -78,13 +87,7 @@ public class GameController {
 
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.isPresent() && result.get() == whiteButton) {
-            humanColor = TileState.WHITE;
-            botColor = TileState.BLACK;
-        } else {
-            humanColor = TileState.BLACK;
-            botColor = TileState.WHITE;
-        }
+        applyChosenColor(result.orElse(null));
 
 
         // Show a confirmation popup so player knows their colour
@@ -93,6 +96,16 @@ public class GameController {
         info.setHeaderText("Bot player added");
         info.setContentText("You are " + humanColor + ". Bot is " + botColor + ".");
         info.showAndWait();
+    }
+
+    void applyChosenColor(ButtonType choice){
+        if (choice != null && "White".equals(choice.getText())) {
+            humanColor = TileState.WHITE;
+            botColor = TileState.BLACK;
+        } else {
+            humanColor = TileState.BLACK;
+            botColor = TileState.WHITE;
+        }
     }
 
     private void updateWindowTitle() {
