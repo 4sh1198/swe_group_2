@@ -476,14 +476,18 @@ public class GameController {
             int col = move % 11;
             int row = move / 11;
 
+            System.out.printf("BOT PLAYING: Octagon (%c,%d)%n", (char)('A' + col), row + 1);
+
             Octagon oct = board.getOctagon(col, row);
 
-            if (oct.getState() != TileState.EMPTY) return;
+            if (oct.getState() != TileState.EMPTY) {
+                System.out.println("ERROR: Octagon already occupied!");
+                return;
+            }
 
             TileState state = botColor;
             oct.setState(state);
 
-            // Find and update the UI shape
             boardPane.getChildren().stream()
                     .filter(n -> n.getUserData() == oct)
                     .findFirst()
@@ -503,9 +507,14 @@ public class GameController {
             int col = ri % 10;
             int row = ri / 10;
 
+            System.out.printf("BOT PLAYING: Rhombus (%d,%d)%n", col + 1, row + 1);
+
             Rhombus rho = board.getRhombus(col + 0.5, row + 0.5);
 
-            if (rho.getState() != TileState.EMPTY) return;
+            if (rho.getState() != TileState.EMPTY) {
+                System.out.println("ERROR: Rhombus already occupied!");
+                return;
+            }
 
             TileState state = botColor;
             rho.setState(state);
@@ -525,7 +534,6 @@ public class GameController {
             }
         }
 
-        // Switch turn back to human
         board.setBlackTurn(!board.isBlackTurn());
         displayPlayerTurn();
     }
