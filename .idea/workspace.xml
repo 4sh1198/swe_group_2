@@ -9,14 +9,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="update jarfile to recent commit">
+    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="Build jarfile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/QuaxBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/QuaxBoard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <favorite-branches>
@@ -79,7 +87,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.LLMThirdPartyAiProvidersConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.mcp&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -146,6 +154,10 @@
       <workItem from="1772811150490" duration="2130000" />
       <workItem from="1772816908504" duration="307000" />
       <workItem from="1774627062414" duration="6582000" />
+      <workItem from="1775217681093" duration="885000" />
+      <workItem from="1775995263834" duration="7542000" />
+      <workItem from="1776007719470" duration="723000" />
+      <workItem from="1776008467239" duration="317000" />
     </task>
     <task id="LOCAL-00001" summary="feature 3 implemented">
       <option name="closed" value="true" />
@@ -211,7 +223,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774650218008</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Build jarfile">
+      <option name="closed" value="true" />
+      <created>1775217706121</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1775217706121</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,7 +257,8 @@
     <MESSAGE value="add alert if pie rule used" />
     <MESSAGE value="add win checking functionality for black and white. &#10;&#10;the functionality is minimum viable right now, and may be improved upon later" />
     <MESSAGE value="update jarfile to recent commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="update jarfile to recent commit" />
+    <MESSAGE value="Build jarfile" />
+    <option name="LAST_COMMIT_MESSAGE" value="Build jarfile" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

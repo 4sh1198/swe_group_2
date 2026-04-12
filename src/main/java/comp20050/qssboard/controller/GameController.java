@@ -1,9 +1,6 @@
 package comp20050.qssboard.controller;
 
-import comp20050.qssboard.model.Octagon;
-import comp20050.qssboard.model.QuaxBoard;
-import comp20050.qssboard.model.Rhombus;
-import comp20050.qssboard.model.TileState;
+import comp20050.qssboard.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
@@ -50,6 +47,8 @@ public class GameController {
     private TileState botColor = TileState.WHITE;
     private boolean botGame = true;
 
+    private MonteCarloSimulator simulator = new MonteCarloSimulator(1000000);
+
     @FXML
     public void initialize() {
         board = new QuaxBoard(CELLS);
@@ -58,6 +57,9 @@ public class GameController {
 
         drawBoard();
         displayPlayerTurn();
+        if (botColor == TileState.BLACK) {
+            runAnalysis();
+        }
 
         Platform.runLater(this::updateWindowTitle);
     }
@@ -312,6 +314,8 @@ public class GameController {
 
             displayPlayerTurn();
             alert.showAndWait();
+            botColor = TileState.WHITE;
+            runAnalysis();
         });
         boardPane.getChildren().add(button);
     }
@@ -380,9 +384,9 @@ public class GameController {
             return;
         }
 
-
         board.setBlackTurn(!board.isBlackTurn());
         displayPlayerTurn();
+        runAnalysis();
     }
 
     private void onRhombusClicked(Rhombus rho, Polygon shape) throws IllegalArgumentException {
@@ -408,9 +412,9 @@ public class GameController {
             return;
         }
 
-
         board.setBlackTurn(!board.isBlackTurn());
         displayPlayerTurn();
+        runAnalysis();
     }
 
     private void displayWinner(TileState winner) {
@@ -420,5 +424,96 @@ public class GameController {
         alert.setHeaderText("Game Over!");
         alert.setContentText((winner == TileState.BLACK ? "Black wins!" : "White wins!"));
         alert.showAndWait();
+    }
+
+    private void runAnalysis() {
+        if (gameOver) return;
+
+        // Only act if it's bot's turn
+        TileState current = board.isBlackTurn() ? TileState.BLACK : TileState.WHITE;
+        if (current != botColor) return;
+
+        QuaxBoard snapshot = board.deepCopy();
+
+        Thread t = new Thread(() -> {
+            int best = simulator.bestMove(snapshot);
+
+            Platform.runLater(() -> playBotMove(best));
+        });
+
+        t.setDaemon(true);
+        t.start();
+    }
+
+    private void highlightBestMove(int move) {
+        // decode and highlight the suggested tile in the UI
+        if (move >= 0) {
+            int col = move % 11, row = move / 11;
+            System.out.println("Suggested octagon: " + col + "," + row);
+        } else {
+            int ri = -(move + 1);
+            System.out.println("Suggested rhombus: " + ri % 10 + "," + ri / 10);
+        }
+    }
+
+    private void playBotMove(int move) {
+        if (gameOver) return;
+
+        if (move >= 0) {
+            int col = move % 11;
+            int row = move / 11;
+
+            Octagon oct = board.getOctagon(col, row);
+
+            if (oct.getState() != TileState.EMPTY) return;
+
+            TileState state = botColor;
+            oct.setState(state);
+
+            // Find and update the UI shape
+            boardPane.getChildren().stream()
+                    .filter(n -> n.getUserData() == oct)
+                    .findFirst()
+                    .ifPresent(n -> ((Polygon) n).setFill(
+                            state == TileState.BLACK ? Color.BLACK : Color.WHITE
+                    ));
+
+            moveCount++;
+
+            if (board.checkWin(state)) {
+                displayWinner(state);
+                return;
+            }
+
+        } else {
+            int ri = -(move + 1);
+            int col = ri % 10;
+            int row = ri / 10;
+
+            Rhombus rho = board.getRhombus(col + 0.5, row + 0.5);
+
+            if (rho.getState() != TileState.EMPTY) return;
+
+            TileState state = botColor;
+            rho.setState(state);
+
+            boardPane.getChildren().stream()
+                    .filter(n -> n.getUserData() == rho)
+                    .findFirst()
+                    .ifPresent(n -> ((Polygon) n).setFill(
+                            state == TileState.BLACK ? Color.BLACK : Color.WHITE
+                    ));
+
+            moveCount++;
+
+            if (board.checkWin(state)) {
+                displayWinner(state);
+                return;
+            }
+        }
+
+        // Switch turn back to human
+        board.setBlackTurn(!board.isBlackTurn());
+        displayPlayerTurn();
     }
 }

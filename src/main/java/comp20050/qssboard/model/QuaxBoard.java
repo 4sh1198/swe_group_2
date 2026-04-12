@@ -302,4 +302,43 @@ public class QuaxBoard {
 
         return false;
     }
+
+    public QuaxBoard deepCopy() {
+        QuaxBoard copy = new QuaxBoard(CELLS);
+
+        for (int r = 0; r < CELLS; r++)
+            for (int c = 0; c < CELLS; c++)
+                copy.getOctagon(c, r).setState(this.getOctagon(c, r).getState());
+
+        for (int r = 0; r < CELLS - 1; r++)
+            for (int c = 0; c < CELLS - 1; c++)
+                copy.getRhombus(c + 0.5, r + 0.5)
+                        .setState(this.getRhombus(c + 0.5, r + 0.5).getState());
+
+        copy.setBlackTurn(this.isBlackTurn());
+        return copy;
+    }
+
+    public BitBoard toBitBoard() {
+        BitBoard bb = new BitBoard();
+
+        for (int r = 0; r < CELLS; r++)
+            for (int c = 0; c < CELLS; c++)
+                bb.setOctagon(c, r, toInt(getOctagon(c, r).getState()));
+
+        for (int r = 0; r < CELLS - 1; r++)
+            for (int c = 0; c < CELLS - 1; c++)
+                bb.setRhombus(c, r, toInt(getRhombus(c + 0.5, r + 0.5).getState()));
+
+        bb.setBlackTurn(isBlackTurn());
+        return bb;
+    }
+
+    private int toInt(TileState s) {
+        return switch (s) {
+            case BLACK -> BitBoard.BLACK;
+            case WHITE -> BitBoard.WHITE;
+            default -> BitBoard.EMPTY;
+        };
+    }
 }
