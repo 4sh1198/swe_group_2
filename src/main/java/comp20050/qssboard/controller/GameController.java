@@ -47,12 +47,13 @@ public class GameController {
     private TileState botColor = TileState.WHITE;
     private boolean botGame = true;
     private boolean testMode = false;
+    private boolean isAnalysing = false;
 
     public void setTestMode(boolean testMode){
         this.testMode = testMode;
     }
 
-    private MonteCarloSimulator simulator = new MonteCarloSimulator(1000000);
+    private MonteCarloSimulator simulator = new MonteCarloSimulator(7500000);
 
     @FXML
     public void initialize() {
@@ -371,6 +372,9 @@ public class GameController {
     // Event handlers
 
     private void onOctagonClicked(Octagon oct, Polygon shape) throws IllegalArgumentException {
+        if (gameOver) return;
+        if (isAnalysing) return;
+
         if (oct.getState() != TileState.EMPTY) {
             throw new IllegalArgumentException("Tile is already occupied by a player");
         }
@@ -382,7 +386,6 @@ public class GameController {
         // Update view (colour)
         shape.setFill(newState == TileState.BLACK ? Color.BLACK : Color.WHITE);
 
-        // Update chains
 
         System.out.println("Clicked: " + oct);
         moveCount++;
@@ -403,6 +406,9 @@ public class GameController {
     }
 
     private void onRhombusClicked(Rhombus rho, Polygon shape) throws IllegalArgumentException {
+        if (gameOver) return;
+        if (isAnalysing) return;
+
         if (rho.getState() != TileState.EMPTY) {
             throw new IllegalArgumentException("Tile is already occupied by a player");
         }
@@ -441,6 +447,7 @@ public class GameController {
 
     private void runAnalysis() {
         if (gameOver) return;
+        isAnalysing = true;
 
         // Only act if it's bot's turn
         TileState current = board.isBlackTurn() ? TileState.BLACK : TileState.WHITE;
@@ -451,7 +458,11 @@ public class GameController {
         Thread t = new Thread(() -> {
             int best = simulator.bestMove(snapshot);
 
-            Platform.runLater(() -> playBotMove(best));
+            Platform.runLater(() -> {
+                playBotMove(best);
+                isAnalysing = false;
+            });
+
         });
 
         t.setDaemon(true);
