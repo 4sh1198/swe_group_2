@@ -56,7 +56,7 @@ public class GameController {
         this.testMode = testMode;
     }
 
-    private MonteCarloSimulator simulator = new MonteCarloSimulator(1000000);
+    private MonteCarloSimulator simulator = new MonteCarloSimulator(7500000);
 
     @FXML
     public void initialize() {
@@ -474,7 +474,6 @@ public class GameController {
         // Only act if it's bot's turn
         TileState current = board.isBlackTurn() ? TileState.BLACK : TileState.WHITE;
         if (current != botColor) return;
-
         isAnalysing = true;
 
         QuaxBoard snapshot = board.deepCopy();
