@@ -306,6 +306,157 @@ public class GameControllerTest {
         assertEquals(TileState.WHITE, bot);
     }
 
+    //testing if show strategy displays win rate
+    @Test
+    void showStrategyDisplaysWinRate() throws Exception {
+        GameController controller = initController();
+        Pane pane = getPane(controller);
+
+        runFX(() -> {});
+
+        setField(controller, "strategyMove", 0);
+        setField(controller, "bestMoveWinRate", 0.75);
+
+        runFX(() -> invokeShowStrategy(controller));
+
+        boolean found = pane.getChildren().stream()
+                .filter(n -> n instanceof Text)
+                .map(n -> (Text) n)
+                .anyMatch(t -> t.getText().contains("Win rate"));
+
+        assertTrue(found);
+    }
+
+    //testing if once show strategy is pressed, it's replaced with hide strategy
+    @Test
+    void showStrategyReplacesButtonWithHide() throws Exception{
+        GameController controller = initController();
+        Pane pane = getPane(controller);
+
+        setField(controller, "strategyMove", 0);
+
+        runFX(() -> invokeShowStrategy(controller));
+
+        boolean hasHideButton;
+        hasHideButton = pane.getChildren().stream()
+                .filter(n -> n instanceof Button)
+                .map(n -> (Button) n)
+                .anyMatch(b -> b.getText().contains("Hide"));
+
+        assertTrue(hasHideButton);
+    }
+
+    //testing if pressing hide strategy removes win text
+    @Test
+    void hideStrategyRemovesWinRate() throws Exception{
+        GameController controller = initController();
+        Pane pane = getPane(controller);
+
+        setField(controller, "strategyMove", 0);
+        setField(controller, "bestMoveWinRate", 0.75);
+
+        runFX(() -> {
+            try {
+                invokeShowStrategy(controller);
+            } catch (Exception e){
+                throw new RuntimeException(e);
+            }
+        });
+
+        runFX(() -> {
+            try {
+                invokeHideStrategy(controller);
+            } catch (Exception e){
+                throw new RuntimeException(e);
+            }
+        });
+
+        boolean found = pane.getChildren().stream()
+                .filter(n -> n instanceof Text)
+                .map(n -> (Text) n)
+                .anyMatch(t -> t.getText().contains("Win rate"));
+
+        assertFalse(found);
+    }
+
+    //testing if pressing hide strategy puts back show button
+    @Test
+    void hideStrategyRestoresShowButton() throws Exception{
+        GameController controller = initController();
+        Pane pane = getPane(controller);
+
+        setField(controller, "strategyMove", 0);
+
+        runFX(() -> {
+            try {
+                invokeShowStrategy(controller);
+            } catch (Exception e){
+                throw new RuntimeException(e);
+            }
+        });
+
+        runFX(() -> {
+            try {
+                invokeHideStrategy(controller);
+            } catch (Exception e){
+                throw new RuntimeException(e);
+            }
+        });
+        boolean hasShowButton = pane.getChildren().stream()
+                .filter(n -> n instanceof Button)
+                .map(n -> (Button) n)
+                .anyMatch(b -> b.getText().contains("Show"));
+
+        assertTrue(hasShowButton);
+    }
+
+    //testing if pressing show strategy highlights the tile played by the bot
+    @Test
+    void showStrategyHighlightsTile() throws Exception{
+        GameController controller = initController();
+        Pane pane = getPane(controller);
+
+        setField(controller, "strategyMove", 0);
+
+        runFX(() -> invokeShowStrategy(controller));
+
+
+        long highlighted = pane.getChildren().stream()
+                .filter(n -> n instanceof Polygon)
+                .map(n -> (Polygon) n)
+                .filter(p -> p.getFill().toString().equals("0x32cd32ff"))
+                .count();
+
+        assertEquals(1, highlighted);
+    }
+
+
+    private void invokeHideStrategy(GameController controller) {
+        try {
+            Method m = GameController.class.getDeclaredMethod("hideStrategy");
+            m.setAccessible(true);
+            m.invoke(controller);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void invokeShowStrategy(GameController controller) {
+        try {
+            Method m = GameController.class.getDeclaredMethod("showStrategy");
+            m.setAccessible(true);
+            m.invoke(controller);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void setField(GameController controller, String name, Object value) throws Exception{
+        Field f = GameController.class.getDeclaredField(name);
+        f.setAccessible(true);
+        f.set(controller, value);
+    }
+
     private static <T> T getField(GameController controller, String name) throws Exception{
         Field f = GameController.class.getDeclaredField(name);
         f.setAccessible(true);
