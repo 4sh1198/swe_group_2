@@ -6,6 +6,7 @@ import java.util.concurrent.*;
 public class MonteCarloSimulator {
 
     private final int simulations;
+    public double lastBestWinRate = 0.0;
 
     public MonteCarloSimulator(int simulations) {
         this.simulations = simulations;
@@ -44,6 +45,7 @@ public class MonteCarloSimulator {
                 if (rate > bestRate) {
                     bestRate = rate;
                     bestMove = entry.getKey();
+                    lastBestWinRate = rate;
                 }
             }
 

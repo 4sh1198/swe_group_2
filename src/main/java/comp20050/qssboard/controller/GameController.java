@@ -48,6 +48,9 @@ public class GameController {
     private boolean botGame = true;
     private boolean testMode = false;
     private boolean isAnalysing = false;
+    private boolean strategyVisible = false;
+    private int strategyMove = Integer.MIN_VALUE;
+    private double bestMoveWinRate = 0.0;
 
     public void setTestMode(boolean testMode){
         this.testMode = testMode;
@@ -292,6 +295,19 @@ public class GameController {
             createPieButton();
         }
 
+        boardPane.getChildren().removeIf(node -> "strategyButton".equals(node.getUserData()));
+        Button stratBtn = new Button("Show\nStrategy");
+        stratBtn.setLayoutX(TOTAL_SIZE / 2 - 50);
+        stratBtn.setLayoutY(TOTAL_SIZE + 20);
+        stratBtn.setFont(Font.font("Arial", 12));
+        stratBtn.setPrefWidth(70);
+        stratBtn.setPrefHeight(40);
+        stratBtn.setWrapText(true);
+        stratBtn.setStyle("-fx-background-color: limegreen; -fx-text-fill: black;");
+        stratBtn.setUserData("strategyButton");
+        stratBtn.setOnAction(e -> showStrategy());
+        boardPane.getChildren().add(stratBtn);
+
     }
 
     private void createPieButton() {
@@ -374,6 +390,7 @@ public class GameController {
     private void onOctagonClicked(Octagon oct, Polygon shape) throws IllegalArgumentException {
         if (gameOver) return;
         if (isAnalysing) return;
+        boardPane.getChildren().removeIf(node -> "strategyHighlight".equals(node.getUserData()));
 
         if (oct.getState() != TileState.EMPTY) {
             throw new IllegalArgumentException("Tile is already occupied by a player");
@@ -408,6 +425,7 @@ public class GameController {
     private void onRhombusClicked(Rhombus rho, Polygon shape) throws IllegalArgumentException {
         if (gameOver) return;
         if (isAnalysing) return;
+        boardPane.getChildren().removeIf(node -> "strategyHighlight".equals(node.getUserData()));
 
         if (rho.getState() != TileState.EMPTY) {
             throw new IllegalArgumentException("Tile is already occupied by a player");
@@ -457,8 +475,11 @@ public class GameController {
 
         Thread t = new Thread(() -> {
             int best = simulator.bestMove(snapshot);
+            double rate = simulator.lastBestWinRate;
 
             Platform.runLater(() -> {
+                strategyMove = best;
+                bestMoveWinRate = rate;
                 playBotMove(best);
                 isAnalysing = false;
             });
@@ -482,6 +503,7 @@ public class GameController {
 
     private void playBotMove(int move) {
         if (gameOver) return;
+        boardPane.getChildren().removeIf(node -> "strategyHighlight".equals(node.getUserData()));
 
         if (move >= 0) {
             int col = move % 11;
@@ -547,5 +569,121 @@ public class GameController {
 
         board.setBlackTurn(!board.isBlackTurn());
         displayPlayerTurn();
+    }
+
+
+    private void showStrategy() {
+        if (strategyMove == Integer.MIN_VALUE) return;
+
+        // clear any previous highlight first
+        boardPane.getChildren().removeIf(node -> "strategyHighlight".equals(node.getUserData()));
+
+        // restore ALL tiles to their correct colours first
+        for (javafx.scene.Node n : boardPane.getChildren()) {
+            if (n instanceof Polygon) {
+                Object ud = n.getUserData();
+                if (ud instanceof Octagon oct) {
+                    TileState s = oct.getState();
+                    ((Polygon) n).setFill(s == TileState.BLACK ? Color.BLACK :
+                            s == TileState.WHITE ? Color.WHITE : OCT_FILL);
+                } else if (ud instanceof Rhombus rho) {
+                    TileState s = rho.getState();
+                    ((Polygon) n).setFill(s == TileState.BLACK ? Color.BLACK :
+                            s == TileState.WHITE ? Color.WHITE : RHO_FILL);
+                }
+            }
+        }
+
+        // now highlight just the one best move tile
+        if (strategyMove >= 0) {
+            int col = strategyMove % 11;
+            int row = strategyMove / 11;
+            Octagon oct = board.getOctagon(col, row);
+            for (javafx.scene.Node n : boardPane.getChildren()) {
+                if (n instanceof Polygon && n.getUserData() == oct) {
+                    ((Polygon) n).setFill(Color.LIMEGREEN);
+                    break;
+                }
+            }
+        } else {
+            int ri = -(strategyMove + 1);
+            Rhombus rho = board.getRhombus(ri % 10 + 0.5, ri / 10 + 0.5);
+            for (javafx.scene.Node n : boardPane.getChildren()) {
+                if (n instanceof Polygon && n.getUserData() == rho) {
+                    ((Polygon) n).setFill(Color.LIMEGREEN);
+                    break;
+                }
+            }
+        }
+
+        // show win rate text
+        Text winText = new Text(String.format("Win rate: %.1f%%", bestMoveWinRate * 100));
+        winText.setFill(Color.DARKGREEN);
+        winText.setFont(Font.font("Arial", 14));
+        winText.setX(TOTAL_SIZE / 2 + 80);
+        winText.setY(TOTAL_SIZE + 45);
+        winText.setUserData("strategyHighlight");
+        boardPane.getChildren().add(winText);
+
+        // swap button to Hide Strategy
+        boardPane.getChildren().removeIf(node -> "strategyButton".equals(node.getUserData()));
+        Button hideBtn = new Button("Hide\nStrategy");
+        hideBtn.setLayoutX(TOTAL_SIZE / 2 - 50);
+        hideBtn.setLayoutY(TOTAL_SIZE + 20);
+        hideBtn.setFont(Font.font("Arial", 12));
+        hideBtn.setPrefWidth(70);
+        hideBtn.setPrefHeight(40);
+        hideBtn.setWrapText(true);
+        hideBtn.setStyle("-fx-background-color: limegreen; -fx-text-fill: black;");
+        hideBtn.setUserData("strategyButton");
+        hideBtn.setOnAction(e -> hideStrategy());
+        boardPane.getChildren().add(hideBtn);
+    }
+
+    private void hideStrategy() {
+        // remove win rate text
+        boardPane.getChildren().removeIf(node -> "strategyHighlight".equals(node.getUserData()));
+
+        // restore correct colour of the highlighted tile
+        if (strategyMove != Integer.MIN_VALUE) {
+            if (strategyMove >= 0) {
+                int col = strategyMove % 11;
+                int row = strategyMove / 11;
+                Octagon oct = board.getOctagon(col, row);
+                for (javafx.scene.Node n : boardPane.getChildren()) {
+                    if (n instanceof Polygon && n.getUserData() == oct) {
+                        TileState s = oct.getState();
+                        ((Polygon) n).setFill(s == TileState.BLACK ? Color.BLACK :
+                                s == TileState.WHITE ? Color.WHITE : OCT_FILL);
+                        break;
+                    }
+                }
+            } else {
+                int ri = -(strategyMove + 1);
+                Rhombus rho = board.getRhombus(ri % 10 + 0.5, ri / 10 + 0.5);
+                for (javafx.scene.Node n : boardPane.getChildren()) {
+                    if (n instanceof Polygon && n.getUserData() == rho) {
+                        TileState s = rho.getState();
+                        ((Polygon) n).setFill(s == TileState.BLACK ? Color.BLACK :
+                                s == TileState.WHITE ? Color.WHITE : RHO_FILL);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // swap button back to Show Strategy
+        boardPane.getChildren().removeIf(node -> "strategyButton".equals(node.getUserData()));
+        Button showBtn = new Button("Show\nStrategy");
+        showBtn.setLayoutX(TOTAL_SIZE / 2 - 50);
+        showBtn.setLayoutY(TOTAL_SIZE + 20);
+        showBtn.setFont(Font.font("Arial", 12));
+        showBtn.setPrefWidth(70);
+        showBtn.setPrefHeight(40);
+        showBtn.setWrapText(true);
+        showBtn.setStyle("-fx-background-color: limegreen; -fx-text-fill: black;");
+        showBtn.setUserData("strategyButton");
+        showBtn.setOnAction(e -> showStrategy());
+        boardPane.getChildren().add(showBtn);
     }
 }

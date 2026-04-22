@@ -12,6 +12,7 @@
     <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="Add Bot Strategy to board">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/MonteCarloSimulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/MonteCarloSimulator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,16 +53,17 @@
     &quot;assignee&quot;: &quot;0TricK&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/4sh1198/swe_group_2.git&quot;,
-    &quot;accountId&quot;: &quot;34187012-c06b-47c4-aecf-db76c2d22c5d&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/4sh1198/swe_group_2.git",
+    "accountId": "902f22a6-3241-43df-9168-93351c5b4581"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="39unJ9FjpfdwbowSwu2e43lf1AR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -96,7 +98,7 @@
       <recent name="C:\Users\sharv\OneDrive\Desktop\Uni Docs\Java Lab\QSSBoard\" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Launcher">
+  <component name="RunManager" selected="JAR Application.QSSBoard.jar">
     <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="comp20050.qssboard.Launcher" />
       <module name="QSSBoard" />
@@ -120,8 +122,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Launcher" />
         <item itemvalue="JAR Application.QSSBoard.jar" />
+        <item itemvalue="Application.Launcher" />
         <item itemvalue="Application.Launcher" />
         <item itemvalue="JAR Application.QSSBoard.jar" />
       </list>
@@ -130,11 +132,12 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.26775.15" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.26775.15" />
       </set>
     </attachedChunks>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="" />
@@ -157,6 +160,7 @@
       <workItem from="1775995263834" duration="7542000" />
       <workItem from="1776007719470" duration="723000" />
       <workItem from="1776008467239" duration="1867000" />
+      <workItem from="1776817599068" duration="5148000" />
     </task>
     <task id="LOCAL-00001" summary="feature 3 implemented">
       <option name="closed" value="true" />
