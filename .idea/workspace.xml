@@ -9,10 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="Add Bot Strategy to board">
-      <change afterPath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/controller/MonteCarloSimulatorTest.java" afterDir="false" />
+    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="tests for sprint 4 all passing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/controller/GameControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/controller/GameControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/BitBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/BitBoard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +76,7 @@
     "JUnit.GameControllerTest.hideStrategyRemovesWinRate.executor": "Run",
     "JUnit.GameControllerTest.hideStrategyRestoresShowButton.executor": "Run",
     "JUnit.GameControllerTest.hideStrategyRestoresShowStrategy.executor": "Run",
+    "JUnit.GameControllerTest.secondMoveOnRhombus.executor": "Run",
     "JUnit.GameControllerTest.showStrategyDisplaysWinRate.executor": "Run",
     "JUnit.GameControllerTest.showStrategyHighlightsTile.executor": "Run",
     "JUnit.GameControllerTest.showStrategyReplacesButtonWithHide.executor": "Run",
@@ -109,7 +110,7 @@
       <recent name="C:\Users\sharv\OneDrive\Desktop\Uni Docs\Java Lab\QSSBoard\" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.GameControllerTest.showStrategyHighlightsTile">
+  <component name="RunManager">
     <configuration name="GameControllerTest.hideStrategyRemovesWinRate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="QSSBoard" />
       <extension name="coverage">
@@ -312,7 +313,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776009103413</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="tests for sprint 4 all passing">
+      <option name="closed" value="true" />
+      <created>1776881413986</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1776881413986</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,7 +349,8 @@
     <MESSAGE value="update jarfile to recent commit" />
     <MESSAGE value="Build jarfile" />
     <MESSAGE value="Add Bot Strategy to board" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Bot Strategy to board" />
+    <MESSAGE value="tests for sprint 4 all passing" />
+    <option name="LAST_COMMIT_MESSAGE" value="tests for sprint 4 all passing" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

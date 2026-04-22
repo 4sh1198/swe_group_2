@@ -56,7 +56,7 @@ public class GameController {
         this.testMode = testMode;
     }
 
-    private MonteCarloSimulator simulator = new MonteCarloSimulator(7500000);
+    private MonteCarloSimulator simulator = new MonteCarloSimulator(1000000);
 
     @FXML
     public void initialize() {
@@ -93,6 +93,10 @@ public class GameController {
 
         applyChosenColor(result.orElse(null));
 
+        if (botColor == TileState.BLACK){
+            runAnalysis();
+        }
+
 
         // Show a confirmation popup so player knows their colour
         Alert info = new Alert(Alert.AlertType.INFORMATION);
@@ -103,7 +107,7 @@ public class GameController {
     }
 
     void applyChosenColor(ButtonType choice){
-        if (choice != null && "White".equals(choice.getText())) {
+        if (choice != null && choice.getText().equalsIgnoreCase("white")) {
             humanColor = TileState.WHITE;
             botColor = TileState.BLACK;
         } else {
@@ -464,12 +468,14 @@ public class GameController {
     }
 
     private void runAnalysis() {
+        if (testMode) return;
         if (gameOver) return;
-        isAnalysing = true;
 
         // Only act if it's bot's turn
         TileState current = board.isBlackTurn() ? TileState.BLACK : TileState.WHITE;
         if (current != botColor) return;
+
+        isAnalysing = true;
 
         QuaxBoard snapshot = board.deepCopy();
 
