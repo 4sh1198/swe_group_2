@@ -56,7 +56,7 @@ public class GameController {
         this.testMode = testMode;
     }
 
-    private MonteCarloSimulator simulator = new MonteCarloSimulator(7500000);
+    private MonteCarloSimulator simulator = new MonteCarloSimulator(2000000);
 
     @FXML
     public void initialize() {
