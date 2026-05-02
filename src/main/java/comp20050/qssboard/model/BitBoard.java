@@ -132,7 +132,7 @@ public class BitBoard {
 
     // Mirrors QuaxBoard.getNeighbors() exactly.
     // Encoded as {type, col, row} where type 0=octagon, 1=rhombus.
-    private List<int[]> getNeighbours(int type, int c, int r) {
+    protected List<int[]> getNeighbours(int type, int c, int r) {
         List<int[]> neighbours = new ArrayList<>();
 
         if (type == 0) {

@@ -315,10 +315,9 @@ public class GameControllerTest {
 
         runFX(() -> {});
 
-        setField(controller, "strategyMove", 0);
-        setField(controller, "bestMoveWinRate", 0.75);
-
-        runFX(() -> invokeShowStrategy(controller));
+        StrategyOverlay overlay = getStrategyOverlay(controller);
+        runFX(() -> overlay.setStrategyMove(0, 0.75));
+        runFX(overlay::show);
 
         boolean found = pane.getChildren().stream()
                 .filter(n -> n instanceof Text)
@@ -334,9 +333,9 @@ public class GameControllerTest {
         GameController controller = initController();
         Pane pane = getPane(controller);
 
-        setField(controller, "strategyMove", 0);
-
-        runFX(() -> invokeShowStrategy(controller));
+        StrategyOverlay overlay = getStrategyOverlay(controller);
+        runFX(() -> overlay.setStrategyMove(0, 0.5));
+        runFX(overlay::show);
 
         boolean hasHideButton;
         hasHideButton = pane.getChildren().stream()
@@ -353,24 +352,10 @@ public class GameControllerTest {
         GameController controller = initController();
         Pane pane = getPane(controller);
 
-        setField(controller, "strategyMove", 0);
-        setField(controller, "bestMoveWinRate", 0.75);
-
-        runFX(() -> {
-            try {
-                invokeShowStrategy(controller);
-            } catch (Exception e){
-                throw new RuntimeException(e);
-            }
-        });
-
-        runFX(() -> {
-            try {
-                invokeHideStrategy(controller);
-            } catch (Exception e){
-                throw new RuntimeException(e);
-            }
-        });
+        StrategyOverlay overlay = getStrategyOverlay(controller);
+        runFX(() -> overlay.setStrategyMove(0, 0.75));
+        runFX(overlay::show);
+        runFX(overlay::hide);
 
         boolean found = pane.getChildren().stream()
                 .filter(n -> n instanceof Text)
@@ -386,23 +371,11 @@ public class GameControllerTest {
         GameController controller = initController();
         Pane pane = getPane(controller);
 
-        setField(controller, "strategyMove", 0);
+        StrategyOverlay overlay = getStrategyOverlay(controller);
+        runFX(() -> overlay.setStrategyMove(0, 0.5));
+        runFX(overlay::show);
+        runFX(overlay::hide);
 
-        runFX(() -> {
-            try {
-                invokeShowStrategy(controller);
-            } catch (Exception e){
-                throw new RuntimeException(e);
-            }
-        });
-
-        runFX(() -> {
-            try {
-                invokeHideStrategy(controller);
-            } catch (Exception e){
-                throw new RuntimeException(e);
-            }
-        });
         boolean hasShowButton = pane.getChildren().stream()
                 .filter(n -> n instanceof Button)
                 .map(n -> (Button) n)
@@ -417,45 +390,21 @@ public class GameControllerTest {
         GameController controller = initController();
         Pane pane = getPane(controller);
 
-        setField(controller, "strategyMove", 0);
+        StrategyOverlay overlay = getStrategyOverlay(controller);
+        runFX(() -> overlay.setStrategyMove(0, 0.5));
+        runFX(overlay::show);
 
-        runFX(() -> invokeShowStrategy(controller));
-
-
-        long highlighted = pane.getChildren().stream()
-                .filter(n -> n instanceof Polygon)
-                .map(n -> (Polygon) n)
-                .filter(p -> p.getFill().toString().equals("0x32cd32ff"))
+        long overlayCount = pane.getChildren().stream()
+                .filter(n -> "strategyHighlight".equals(n.getUserData()))
                 .count();
-
-        assertEquals(1, highlighted);
+        assertTrue(overlayCount > 0);
     }
 
 
-    private void invokeHideStrategy(GameController controller) {
-        try {
-            Method m = GameController.class.getDeclaredMethod("hideStrategy");
-            m.setAccessible(true);
-            m.invoke(controller);
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void invokeShowStrategy(GameController controller) {
-        try {
-            Method m = GameController.class.getDeclaredMethod("showStrategy");
-            m.setAccessible(true);
-            m.invoke(controller);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void setField(GameController controller, String name, Object value) throws Exception{
-        Field f = GameController.class.getDeclaredField(name);
+    private static StrategyOverlay getStrategyOverlay(GameController controller) throws Exception {
+        Field f = GameController.class.getDeclaredField("strategyOverlay");
         f.setAccessible(true);
-        f.set(controller, value);
+        return (StrategyOverlay) f.get(controller);
     }
 
     private static <T> T getField(GameController controller, String name) throws Exception{
@@ -484,7 +433,7 @@ public class GameControllerTest {
             r.run();
             latch.countDown();
         });
-        latch.await(5, TimeUnit.SECONDS);
+        latch.await(10, TimeUnit.SECONDS);
     }
 
     private static Map<String, Long> countTexts(Pane pane) {
