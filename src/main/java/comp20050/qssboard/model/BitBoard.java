@@ -20,9 +20,7 @@ public class BitBoard {
     private final long[] bits = new long[7];
     private boolean blackTurn;
 
-    // -------------------------------------------------------------------------
     // Octagon access — col 0..10, row 0..10
-    // -------------------------------------------------------------------------
 
     public int getOctagon(int col, int row) {
         return getBits(OCT_OFFSET + (row * 11 + col) * 2);
@@ -32,11 +30,9 @@ public class BitBoard {
         setBits(OCT_OFFSET + (row * 11 + col) * 2, state);
     }
 
-    // -------------------------------------------------------------------------
     // Rhombus access — col 0..9, row 0..9
     // These are the integer-floored indices of QuaxBoard's half-integer coords.
     // getRhombus(c, r) here corresponds to QuaxBoard.getRhombus(c+0.5, r+0.5).
-    // -------------------------------------------------------------------------
 
     public int getRhombus(int col, int row) {
         return getBits(RHO_OFFSET + (row * 10 + col) * 2);
@@ -46,20 +42,15 @@ public class BitBoard {
         setBits(RHO_OFFSET + (row * 10 + col) * 2, state);
     }
 
-    // -------------------------------------------------------------------------
     // Turn
-    // -------------------------------------------------------------------------
 
     public boolean isBlackTurn() { return blackTurn; }
     public void setBlackTurn(boolean b) { blackTurn = b; }
 
-    // -------------------------------------------------------------------------
     // Core bit operations
-    //
     // All bit indices are (tile_index * 2), so always even.
     // Even offset % 64 is always in 0,2,4,...,62 — never 63.
     // A 2-bit value therefore never straddles a long boundary.
-    // -------------------------------------------------------------------------
 
     private int getBits(int bitIndex) {
         int li  = bitIndex / 64;
@@ -74,9 +65,7 @@ public class BitBoard {
         bits[li] |=  ((long) state << off);
     }
 
-    // -------------------------------------------------------------------------
-    // Copy — the entire reason this class exists for Monte Carlo
-    // -------------------------------------------------------------------------
+    // Copy copies the board: important for Monte Carlo space optimisation
 
     public BitBoard copy() {
         BitBoard b = new BitBoard();
@@ -85,12 +74,8 @@ public class BitBoard {
         return b;
     }
 
-    // -------------------------------------------------------------------------
-    // Win check — mirrors QuaxBoard.checkWin exactly:
-    //   - Seeds only from octagon edges (row 0 for BLACK, col 0 for WHITE)
-    //   - Win condition only on opposite octagon edge (row 10 / col 10)
-    //   - Rhombuses are intermediate BFS nodes, never seeds or win conditions
-    // -------------------------------------------------------------------------
+    // Win check mirrors QuaxBoard.checkWin exactly, but is necessary
+    // as the bitBoard has different getters and setters
 
     public boolean checkWin(int player) {
         boolean[][] visitedOct = new boolean[11][11];

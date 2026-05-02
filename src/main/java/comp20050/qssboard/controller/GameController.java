@@ -149,7 +149,7 @@ public class GameController {
                 rhoShape.setStroke(RHO_STROKE);
                 rhoShape.setStrokeWidth(1.0);
                 rhoShape.setUserData(rho);
-                rhoShape.setOnMouseClicked(e -> onRhombusClicked(rho, rhoShape));
+                rhoShape.setOnMouseClicked(e -> onTileClicked(rho, rhoShape));
                 boardPane.getChildren().add(rhoShape);
             }
         }
@@ -168,7 +168,7 @@ public class GameController {
                 octShape.setStroke(OCT_STROKE);
                 octShape.setStrokeWidth(1.5);
                 octShape.setUserData(oct);
-                octShape.setOnMouseClicked(e -> onOctagonClicked(oct,octShape));
+                octShape.setOnMouseClicked(e -> onTileClicked(oct,octShape));
                 boardPane.getChildren().add(octShape);
             }
         }
@@ -357,7 +357,7 @@ public class GameController {
     public void switchColor(){
         board.setBlackTurn(false);
     }
-    // Shape factories
+
 
     /**
      * Creates a regular octagon centred at (cx, cy) with circumradius RADIUS.
@@ -389,65 +389,28 @@ public class GameController {
         );
     }
 
-    // Event handlers
+    // Event handler
 
-    private void onOctagonClicked(Octagon oct, Polygon shape) throws IllegalArgumentException {
+    private void onTileClicked(Tile tile, Polygon shape) {
         if (gameOver) return;
         if (isAnalysing) return;
         boardPane.getChildren().removeIf(node -> "strategyHighlight".equals(node.getUserData()));
 
-        if (oct.getState() != TileState.EMPTY) {
+        if (tile.getState() != TileState.EMPTY) {
             throw new IllegalArgumentException("Tile is already occupied by a player");
         }
 
-        // Update model
         TileState newState = board.isBlackTurn() ? TileState.BLACK : TileState.WHITE;
-        oct.setState(newState);
-
-        // Update view (colour)
+        tile.setState(newState);
         shape.setFill(newState == TileState.BLACK ? Color.BLACK : Color.WHITE);
 
-
-        System.out.println("Clicked: " + oct);
+        System.out.println("Clicked: " + tile);
         moveCount++;
 
         if (moveCount > 1) {
             boardPane.getChildren().removeIf(node -> "pieButton".equals(node.getUserData()));
         }
 
-        // Win checking
-        if (board.checkWin(newState)) {
-            displayWinner(newState);
-            return;
-        }
-
-        board.setBlackTurn(!board.isBlackTurn());
-        displayPlayerTurn();
-        runAnalysis();
-    }
-
-    private void onRhombusClicked(Rhombus rho, Polygon shape) throws IllegalArgumentException {
-        if (gameOver) return;
-        if (isAnalysing) return;
-        boardPane.getChildren().removeIf(node -> "strategyHighlight".equals(node.getUserData()));
-
-        if (rho.getState() != TileState.EMPTY) {
-            throw new IllegalArgumentException("Tile is already occupied by a player");
-        }
-
-        TileState newState = board.isBlackTurn() ? TileState.BLACK : TileState.WHITE;
-        rho.setState(newState);
-
-        shape.setFill(newState == TileState.BLACK ? Color.BLACK : Color.WHITE);
-
-        System.out.println("Clicked: " + rho);
-        moveCount++;
-
-        if (moveCount > 1) {
-            boardPane.getChildren().removeIf(node -> "pieButton".equals(node.getUserData()));
-        }
-
-        // Win checking
         if (board.checkWin(newState)) {
             displayWinner(newState);
             return;

@@ -216,86 +216,44 @@ public class QuaxBoard {
         return neighbors;
     }
 
+    // The code initially checked seperately for WHITE and BLACK, which was inefficient
+    // Fixed in this iteration
     public boolean checkWin(TileState player) {
-        boolean[][] visitedOct = new boolean[CELLS][CELLS];          // 11x11
-        boolean[][] visitedRho = new boolean[CELLS - 1][CELLS - 1];  // 10x10
+        boolean[][] visitedOct = new boolean[CELLS][CELLS];
+        boolean[][] visitedRho = new boolean[CELLS - 1][CELLS - 1];
         Queue<Tile> queue = new LinkedList<>();
 
-        if (player == TileState.BLACK) {
-            // Seed from all BLACK tiles on the bottom row
-            for (int c = 0; c < CELLS; c++) {
-                Octagon oct = getOctagon(c, 0);
-                if (oct.getState() == TileState.BLACK) {
-                    visitedOct[0][c] = true;
-                    queue.add(oct);
-                }
+        // Seed the starting edge
+        for (int i = 0; i < CELLS; i++) {
+            Octagon oct = (player == TileState.BLACK) ? getOctagon(i, 0) : getOctagon(0, i);
+            if (oct.getState() == player) {
+                int r = oct.getRow(), c = oct.getCol();
+                visitedOct[r][c] = true;
+                queue.add(oct);
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            Tile current = queue.poll();
+
+            // Check win condition on opposite edge
+            if (current instanceof Octagon oct) {
+                boolean wins = (player == TileState.BLACK)
+                        ? oct.getRow() == CELLS - 1
+                        : oct.getCol() == CELLS - 1;
+                if (wins) return true;
             }
 
-            while (!queue.isEmpty()) {
-                Tile current = queue.poll();
+            for (Tile neighbor : getNeighbors(current)) {
+                if (neighbor.getState() != player) continue;
 
-                // Win: an octagon on the opposite (top) edge was reached
-                if (current instanceof Octagon && ((Octagon) current).getRow() == CELLS - 1) {
-                    return true;
-                }
-
-                for (Tile neighbor : getNeighbors(current)) {
-                    if (neighbor.getState() != TileState.BLACK) continue;
-
-                    if (neighbor instanceof Octagon) {
-                        int r = (int) ((Octagon) neighbor).getRow();
-                        int c = (int) ((Octagon) neighbor).getCol();
-                        if (!visitedOct[r][c]) {
-                            visitedOct[r][c] = true;
-                            queue.add(neighbor);
-                        }
-                    } else {
-                        int r = (int) ((Rhombus) neighbor).getRow();
-                        int c = (int) ((Rhombus) neighbor).getCol();
-                        if (!visitedRho[r][c]) {
-                            visitedRho[r][c] = true;
-                            queue.add(neighbor);
-                        }
-                    }
-                }
-            }
-
-        } else if (player == TileState.WHITE) {
-            // Seed from all WHITE tiles on the left column
-            for (int r = 0; r < CELLS; r++) {
-                Octagon oct = getOctagon(0, r);
-                if (oct.getState() == TileState.WHITE) {
-                    visitedOct[r][0] = true;
-                    queue.add(oct);
-                }
-            }
-
-            while (!queue.isEmpty()) {
-                Tile current = queue.poll();
-
-                // Win: an octagon on the opposite (right) edge was reached
-                if (current instanceof Octagon && ((Octagon) current).getCol() == CELLS - 1) {
-                    return true;
-                }
-
-                for (Tile neighbor : getNeighbors(current)) {
-                    if (neighbor.getState() != TileState.WHITE) continue;
-
-                    if (neighbor instanceof Octagon) {
-                        int r = (int) ((Octagon) neighbor).getRow();
-                        int c = (int) ((Octagon) neighbor).getCol();
-                        if (!visitedOct[r][c]) {
-                            visitedOct[r][c] = true;
-                            queue.add(neighbor);
-                        }
-                    } else {
-                        int r = (int) ((Rhombus) neighbor).getRow();
-                        int c = (int) ((Rhombus) neighbor).getCol();
-                        if (!visitedRho[r][c]) {
-                            visitedRho[r][c] = true;
-                            queue.add(neighbor);
-                        }
-                    }
+                if (neighbor instanceof Octagon oct) {
+                    int r = oct.getRow(), c = oct.getCol();
+                    if (!visitedOct[r][c]) { visitedOct[r][c] = true; queue.add(neighbor); }
+                } else {
+                    Rhombus rho = (Rhombus) neighbor;
+                    int r = (int)rho.getRow(), c = (int)rho.getCol();
+                    if (!visitedRho[r][c]) { visitedRho[r][c] = true; queue.add(neighbor); }
                 }
             }
         }

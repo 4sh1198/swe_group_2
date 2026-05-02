@@ -65,8 +65,6 @@ public class Rhombus implements Tile {
     public void      setState(TileState s) { this.state = s; }
 
     public boolean isEmpty() { return state == TileState.EMPTY; }
-    public boolean isBlack() { return state == TileState.BLACK; }
-    public boolean isWhite() { return state == TileState.WHITE; }
 
     @Override
     public String toString() {

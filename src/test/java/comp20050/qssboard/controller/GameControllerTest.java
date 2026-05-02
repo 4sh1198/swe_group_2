@@ -4,6 +4,7 @@ import comp20050.qssboard.model.Octagon;
 import comp20050.qssboard.model.QuaxBoard;
 import comp20050.qssboard.model.Rhombus;
 import comp20050.qssboard.model.TileState;
+import comp20050.qssboard.model.Tile;
 import javafx.scene.control.Button;
 import java.lang.reflect.Method;
 import javafx.application.Platform;
@@ -141,7 +142,7 @@ public class GameControllerTest {
 
         runFX(() -> {
             try {
-                invokeOnOctagonClicked(controller, oct, new Polygon());
+                invokeOnTileClicked(controller, oct, new Polygon());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -161,8 +162,8 @@ public class GameControllerTest {
 
         runFX(() -> {
             try {
-                invokeOnOctagonClicked(controller, firstMove, new Polygon());
-                invokeOnRhombusClicked(controller, rho, new Polygon());
+                invokeOnTileClicked(controller, firstMove, new Polygon());
+                invokeOnTileClicked(controller, rho, new Polygon());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -185,7 +186,7 @@ public class GameControllerTest {
         oct.setState(TileState.BLACK);
 
         assertThrows(Exception.class, () -> {
-            invokeOnOctagonClicked(controller, oct, new Polygon());
+            invokeOnTileClicked(controller, oct, new Polygon());
         });
     }
 
@@ -201,7 +202,7 @@ public class GameControllerTest {
 
         runFX(() -> {
             try {
-                invokeOnOctagonClicked(controller, oct, new Polygon());
+                invokeOnTileClicked(controller, oct, new Polygon());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -225,8 +226,8 @@ public class GameControllerTest {
 
         runFX(() -> {
             try {
-                invokeOnOctagonClicked(controller, firstMove, new Polygon());
-                invokeOnOctagonClicked(controller, secondMove, new Polygon());
+                invokeOnTileClicked(controller, firstMove, new Polygon());
+                invokeOnTileClicked(controller, secondMove, new Polygon());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -518,15 +519,9 @@ public class GameControllerTest {
         return (QuaxBoard) f.get(controller);
     }
 
-    private static void invokeOnOctagonClicked(GameController controller, Octagon oct, Polygon shape) throws Exception {
-        Method m = GameController.class.getDeclaredMethod("onOctagonClicked", Octagon.class, Polygon.class);
+    private static void invokeOnTileClicked(GameController controller, Tile tile, Polygon shape) throws Exception {
+        Method m = GameController.class.getDeclaredMethod("onTileClicked", Tile.class, Polygon.class);
         m.setAccessible(true);
-        m.invoke(controller, oct, shape);
-    }
-
-    private static void invokeOnRhombusClicked(GameController controller, Rhombus rho, Polygon shape) throws Exception {
-        Method m = GameController.class.getDeclaredMethod("onRhombusClicked", Rhombus.class, Polygon.class);
-        m.setAccessible(true);
-        m.invoke(controller, rho, shape);
+        m.invoke(controller, tile, shape);
     }
 }

@@ -88,15 +88,11 @@ public class Octagon implements Tile {
 
     public int   getCol()    { return centre[0]; }
     public int   getRow()    { return centre[1]; }
-    public int getRadius()   {return radius;     }
-    public int[] getCentre() { return centre;    }
 
     public TileState getState()            { return state; }
     public void      setState(TileState s) { this.state = s; }
 
     public boolean isEmpty() { return state == TileState.EMPTY; }
-    public boolean isBlack() { return state == TileState.BLACK; }
-    public boolean isWhite() { return state == TileState.WHITE; }
 
     @Override
     public String toString() {
