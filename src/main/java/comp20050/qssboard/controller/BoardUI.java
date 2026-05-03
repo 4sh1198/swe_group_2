@@ -26,6 +26,7 @@ public class BoardUI implements BoardConfig {
     private int moveCount = 0;
     private boolean pieRuleUsed = false;
     private boolean botGame = true;
+    private boolean testMode =  false;
     public BoardUI(Pane boardPane, QuaxBoard board, BoardRenderer renderer,
                    Callbacks callbacks) {
         this.boardPane = boardPane;
@@ -46,6 +47,8 @@ public class BoardUI implements BoardConfig {
     public void setBotGame(boolean botGame) {
         this.botGame = botGame;
     }
+
+    public void setTestMode(boolean testMode) { this.testMode = testMode; }
 
     public void updateWindowTitle() {
         if (botGame && boardPane.getScene() != null
@@ -70,6 +73,7 @@ public class BoardUI implements BoardConfig {
     }
 
     public void displayWinner(TileState winner) {
+        if (testMode) return;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Quax");
         alert.setHeaderText("Game Over!");
@@ -149,6 +153,7 @@ public class BoardUI implements BoardConfig {
     }
 
     private void showPieRuleAlert() {
+        if (testMode) return;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Quax");
         alert.setHeaderText("Pie Rule:");

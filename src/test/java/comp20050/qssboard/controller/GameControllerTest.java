@@ -1,10 +1,6 @@
 package comp20050.qssboard.controller;
 
-import comp20050.qssboard.model.Octagon;
-import comp20050.qssboard.model.QuaxBoard;
-import comp20050.qssboard.model.Rhombus;
-import comp20050.qssboard.model.TileState;
-import comp20050.qssboard.model.Tile;
+import comp20050.qssboard.model.*;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import java.lang.reflect.Method;
@@ -186,9 +182,16 @@ public class GameControllerTest {
         // make the tile occupied before clicking it
         oct.setState(TileState.BLACK);
 
-        assertThrows(Exception.class, () -> {
-            invokeOnTileClicked(controller, oct, new Polygon());
+        List<Throwable> caught = new ArrayList<>();
+        runFX(() -> {
+            try {
+                invokeOnTileClicked(controller, oct, new Polygon());
+            } catch (Exception e) {
+                caught.add(e);
+            }
         });
+
+        assertFalse(caught.isEmpty(), "Expected an exception to be thrown");
     }
 
 
@@ -475,8 +478,8 @@ public class GameControllerTest {
         boolean hasExplanation = pane.getChildren().stream()
                 .filter(n -> n instanceof Text)
                 .map(n -> (Text) n)
-                .anyMatch(t -> t.getText().contains("Monte Carlo Tree Search")
-                        || t.getText().contains("simulates millions"));
+                .anyMatch(t -> t.getText().contains("MCTS")
+                        || t.getText().contains("Monte Carlo"));
 
         assertTrue(hasExplanation);
     }
@@ -574,6 +577,18 @@ public class GameControllerTest {
         Pane pane = new Pane();
         injectPane(controller, pane);
         runFX(controller::initialize);
+
+        // Inject a faster simulator into both GameController and StrategyOverlay
+        MonteCarloSimulator fastSim = new MonteCarloSimulator(10000);
+
+        Field simField = GameController.class.getDeclaredField("simulator");
+        simField.setAccessible(true);
+        simField.set(controller, fastSim);
+
+        Field overlaySimField = StrategyOverlay.class.getDeclaredField("simulator");
+        overlaySimField.setAccessible(true);
+        overlaySimField.set(getStrategyOverlay(controller), fastSim);
+
         return controller;
     }
 

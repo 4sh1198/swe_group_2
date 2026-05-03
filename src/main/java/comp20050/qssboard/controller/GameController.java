@@ -88,6 +88,7 @@ public class GameController implements BoardConfig {
         };
 
         boardUI = new BoardUI(boardPane, board, renderer, callbacks);
+        boardUI.setTestMode(testMode);
 
         strategyOverlay = new StrategyOverlay(boardPane, board, simulator, renderer, botColor);
 
