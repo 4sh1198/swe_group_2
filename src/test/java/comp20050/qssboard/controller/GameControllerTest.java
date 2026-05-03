@@ -6,6 +6,7 @@ import comp20050.qssboard.model.Rhombus;
 import comp20050.qssboard.model.TileState;
 import comp20050.qssboard.model.Tile;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
 import java.lang.reflect.Method;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -23,7 +24,7 @@ import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import static com.sun.javafx.reflect.FieldUtil.getField;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameControllerTest {
@@ -398,6 +399,126 @@ public class GameControllerTest {
                 .filter(n -> "strategyHighlight".equals(n.getUserData()))
                 .count();
         assertTrue(overlayCount > 0);
+    }
+
+    // additional tests for edge cases, strategy UI, and game behaviour
+    @Test
+    void afterFirstMoveTurnChangesToWhite() throws Exception {
+        GameController controller = initController();
+        QuaxBoard board = getBoard(controller);
+        Pane pane = getPane(controller);
+
+        Octagon oct = board.getOctagon(0, 0);
+
+        runFX(() -> {
+            try {
+                invokeOnTileClicked(controller, oct, new Polygon());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        boolean found = pane.getChildren().stream()
+                .filter(n -> n instanceof Text)
+                .map(n -> (Text) n)
+                .anyMatch(t -> t.getText().equals("White to play"));
+
+        assertTrue(found);
+    }
+
+    @Test
+    void pieRuleSwitchesTurnToWhiteAndRemovesButton() throws Exception {
+        GameController controller = initController();
+        Pane pane = getPane(controller);
+        QuaxBoard board = getBoard(controller);
+
+        Octagon oct = board.getOctagon(0, 0);
+
+        runFX(() -> {
+            try {
+                invokeOnTileClicked(controller, oct, new Polygon());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        Button pieButton = pane.getChildren().stream()
+                .filter(n -> n instanceof Button)
+                .map(n -> (Button) n)
+                .filter(b -> "pieButton".equals(b.getUserData()))
+                .findFirst()
+                .orElseThrow();
+
+        runFX(pieButton::fire);
+
+        boolean pieStillVisible = pane.getChildren().stream()
+                .anyMatch(n -> "pieButton".equals(n.getUserData()));
+
+        boolean whiteToPlayShown = pane.getChildren().stream()
+                .filter(n -> n instanceof Text)
+                .map(n -> (Text) n)
+                .anyMatch(t -> t.getText().equals("White to play"));
+
+        assertFalse(pieStillVisible);
+        assertTrue(whiteToPlayShown);
+    }
+
+    @Test
+    void strategyPanelContainsTextualStrategyExplanation() throws Exception {
+        GameController controller = initController();
+        Pane pane = getPane(controller);
+
+        StrategyOverlay overlay = getStrategyOverlay(controller);
+        runFX(() -> overlay.setStrategyMove(0, 0.75));
+        runFX(overlay::show);
+
+        boolean hasExplanation = pane.getChildren().stream()
+                .filter(n -> n instanceof Text)
+                .map(n -> (Text) n)
+                .anyMatch(t -> t.getText().contains("Monte Carlo Tree Search")
+                        || t.getText().contains("simulates millions"));
+
+        assertTrue(hasExplanation);
+    }
+
+    @Test
+    void strategyHighlightMarksBestMoveWithYellowBorder() throws Exception {
+        GameController controller = initController();
+        Pane pane = getPane(controller);
+
+        StrategyOverlay overlay = getStrategyOverlay(controller);
+        runFX(() -> overlay.setStrategyMove(0, 0.75));
+        runFX(overlay::show);
+
+        boolean foundYellowBestMove = pane.getChildren().stream()
+                .filter(n -> "strategyHighlight".equals(n.getUserData()))
+                .filter(n -> n instanceof Polygon)
+                .map(n -> (Polygon) n)
+                .anyMatch(p -> Color.YELLOW.equals(p.getStroke()));
+
+        assertTrue(foundYellowBestMove);
+    }
+
+    @Test
+    void clickingAfterGameOverDoesNothing() throws Exception {
+        GameController controller = initController();
+        QuaxBoard board = getBoard(controller);
+
+        Field gameOverField = GameController.class.getDeclaredField("gameOver");
+        gameOverField.setAccessible(true);
+        gameOverField.set(controller, true);
+
+        Octagon oct = board.getOctagon(0, 0);
+
+        runFX(() -> {
+            try {
+                invokeOnTileClicked(controller, oct, new Polygon());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        assertEquals(TileState.EMPTY, oct.getState());
     }
 
 
