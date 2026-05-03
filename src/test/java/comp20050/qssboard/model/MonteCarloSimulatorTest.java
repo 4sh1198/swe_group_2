@@ -1,8 +1,5 @@
-package comp20050.qssboard.controller;
+package comp20050.qssboard.model;
 
-import comp20050.qssboard.model.MonteCarloSimulator;
-import comp20050.qssboard.model.QuaxBoard;
-import comp20050.qssboard.model.TileState;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

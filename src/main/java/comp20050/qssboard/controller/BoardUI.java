@@ -12,40 +12,40 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class BoardUI implements BoardConfig{
+public class BoardUI implements BoardConfig {
 
-    private final Pane       boardPane;
-    private final QuaxBoard  board;
+    private static final Color STRIP_BG = Color.web("#D0D0D0");
+    private static final double STRIP_Y = TOTAL_SIZE;
+    private static final double STRIP_H = 80;
+
+    private final Pane boardPane;
+    private final QuaxBoard board;
     private final BoardRenderer renderer; // needed for makeOctagon/makeRhombus in displayPlayerTurn
-
-    // Callbacks into GameController so it makes these changes to the actual game
-    private final Runnable onShowStrategy; // called when Show Strategy button is pressed
-    private final Runnable onPieRuleUsed;  // called when Pie Rule button is activated
-    private final Runnable onSwitchColor;  // called to flip the active player colour
-    private final Runnable onRunAnalysis;  // called to trigger bot analysis after pie rule
-
+    private final Callbacks callbacks;
     // Mutable state synced from GameController after each move
-    private int     moveCount   = 0;
+    private int moveCount = 0;
     private boolean pieRuleUsed = false;
-    private boolean botGame     = true;
-
+    private boolean botGame = true;
     public BoardUI(Pane boardPane, QuaxBoard board, BoardRenderer renderer,
-                   Runnable onShowStrategy, Runnable onPieRuleUsed,
-                   Runnable onSwitchColor,  Runnable onRunAnalysis) {
-        this.boardPane      = boardPane;
-        this.board          = board;
-        this.renderer       = renderer;
-        this.onShowStrategy = onShowStrategy;
-        this.onPieRuleUsed  = onPieRuleUsed;
-        this.onSwitchColor  = onSwitchColor;
-        this.onRunAnalysis  = onRunAnalysis;
+                   Callbacks callbacks) {
+        this.boardPane = boardPane;
+        this.board = board;
+        this.renderer = renderer;
+        this.callbacks = callbacks;
     }
 
     // Called by GameController after each move to keep display in sync
-    public void setMoveCount(int moveCount)   { this.moveCount   = moveCount; }
-    public void setPieRuleUsed(boolean used)  { this.pieRuleUsed = used;      }
-    public void setBotGame(boolean botGame)   { this.botGame     = botGame;   }
+    public void setMoveCount(int moveCount) {
+        this.moveCount = moveCount;
+    }
 
+    public void setPieRuleUsed(boolean used) {
+        this.pieRuleUsed = used;
+    }
+
+    public void setBotGame(boolean botGame) {
+        this.botGame = botGame;
+    }
 
     public void updateWindowTitle() {
         if (botGame && boardPane.getScene() != null
@@ -54,92 +54,19 @@ public class BoardUI implements BoardConfig{
         }
     }
 
-
+    // Display Methods
     public void displayPlayerTurn() {
         boardPane.getChildren().removeIf(node -> "turnDisplay".equals(node.getUserData()));
-
-        double yBottom = TOTAL_SIZE + 10;
-        double xStart  = BORDER;
-
-        // Grey background strip below the board
-        Rectangle displayBg = new Rectangle(0, yBottom - 10, TOTAL_SIZE, 100);
-        displayBg.setFill(Color.web("#D0D0D0"));
-        displayBg.setUserData("turnDisplay");
-        boardPane.getChildren().add(displayBg);
-
-        // Small octagon and rhombus showing the current player's colour
-        Color playerColor = board.isBlackTurn() ? Color.BLACK : Color.WHITE;
-
-        Polygon oct = renderer.makeOctagon(xStart + RADIUS, yBottom + RADIUS);
-        oct.setFill(playerColor);
-        oct.setStroke(Color.BLACK);
-        oct.setStrokeWidth(1.0);
-        oct.setUserData("turnDisplay");
-        boardPane.getChildren().add(oct);
-
-        double rhombusX = xStart + 3 * RADIUS;
-        double rhombusY = yBottom + RADIUS;
-        Polygon rho = renderer.makeRhombus(rhombusX, rhombusY);
-        rho.setFill(playerColor);
-        rho.setStroke(Color.BLACK);
-        rho.setStrokeWidth(1.0);
-        rho.setUserData("turnDisplay");
-        boardPane.getChildren().add(rho);
-
-        Text turnText = new Text((board.isBlackTurn() ? "Black" : "White") + " to play");
-        turnText.setFill(Color.BLACK);
-        turnText.setFont(Font.font("Arial", 16));
-        turnText.setX(rhombusX + RADIUS + 10);
-        turnText.setY(rhombusY + 5);
-        turnText.setUserData("turnDisplay");
-        boardPane.getChildren().add(turnText);
-
-        // Pie rule button only appears after move 1 and before it has been used
-        if (moveCount == 1 && !pieRuleUsed) {
-            createPieButton();
-        }
-
-        // Strategy button always resets to "Show" when the turn changes
         boardPane.getChildren().removeIf(node -> "strategyButton".equals(node.getUserData()));
-        Button stratBtn = new Button("Show\nStrategy");
-        stratBtn.setLayoutX(TOTAL_SIZE / 2 - 50);
-        stratBtn.setLayoutY(TOTAL_SIZE + 20);
-        stratBtn.setFont(Font.font("Arial", 12));
-        stratBtn.setPrefWidth(70);
-        stratBtn.setPrefHeight(40);
-        stratBtn.setWrapText(true);
-        stratBtn.setStyle("-fx-background-color: limegreen; -fx-text-fill: black;");
-        stratBtn.setUserData("strategyButton");
-        stratBtn.setOnAction(e -> onShowStrategy.run());
-        boardPane.getChildren().add(stratBtn);
-    }
 
-    private void createPieButton() {
-        Button button = new Button("Activate Pie Rule");
-        button.setLayoutX(BORDER + (3 * RADIUS) + 250);
-        button.setLayoutY(TOTAL_SIZE + 20);
-        button.setFont(Font.font("Arial", 16));
-        button.setPrefHeight(40);
-        button.setPrefWidth(250);
-        button.setStyle("-fx-background-color: dodgerblue; -fx-text-fill: black;");
-        button.setUserData("pieButton");
-        button.setOnAction(e -> {
-            boardPane.getChildren().removeIf(node -> "pieButton".equals(node.getUserData()));
+        addStripBackground();
+        addTurnIndicator();
+        addTurnLabel();
 
-            // Show confirmation alert before delegating state changes to GameController
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Quax");
-            alert.setHeaderText("Pie Rule:");
-            alert.setContentText("Pie Rule used. Player 1 now plays WHITE");
-            alert.showAndWait();
-
-            // Let GameController handle the actual state mutation
-            onSwitchColor.run();
-            onPieRuleUsed.run();
-            displayPlayerTurn();
-            onRunAnalysis.run();
-        });
-        boardPane.getChildren().add(button);
+        if (moveCount == 1 && !pieRuleUsed) {
+            addPieButton();
+        }
+        addStrategyButton();
     }
 
     public void displayWinner(TileState winner) {
@@ -150,4 +77,109 @@ public class BoardUI implements BoardConfig{
         alert.showAndWait();
         // Note: gameOver flag is set in GameController, not here
     }
+
+    // Grey background strip below the board
+    private void addStripBackground() {
+        Rectangle displayBg = new Rectangle(0, STRIP_Y, TOTAL_SIZE, STRIP_H);
+        displayBg.setFill(STRIP_BG);
+        displayBg.setUserData("turnDisplay");
+        boardPane.getChildren().add(displayBg);
+    }
+
+    // UI Helpers
+
+    // Small octagon and rhombus showing the current player's colour
+    private void addTurnIndicator() {
+        Color playerColor = board.isBlackTurn() ? Color.BLACK : Color.WHITE;
+        double cx = BORDER + RADIUS;
+        double cy = STRIP_Y + 10 + RADIUS;
+
+        Polygon oct = renderer.makeOctagon(cx, cy);
+        oct.setFill(playerColor);
+        oct.setStroke(Color.BLACK);
+        oct.setStrokeWidth(1.0);
+        oct.setUserData("turnDisplay");
+        boardPane.getChildren().add(oct);
+
+        Polygon rho = renderer.makeRhombus(cx + 2 * BoardConfig.RADIUS, cy);
+        rho.setFill(playerColor);
+        rho.setStroke(Color.BLACK);
+        rho.setStrokeWidth(1.0);
+        rho.setUserData("turnDisplay");
+        boardPane.getChildren().add(rho);
+    }
+
+    // Adds text that shows current player
+    private void addTurnLabel() {
+        String label = (board.isBlackTurn() ? "Black" : "White") + " to play";
+        double x = BORDER + 4 * RADIUS + 10;
+        double y = STRIP_Y + 10 + RADIUS + 5;
+
+        Text text = new Text(label);
+        text.setFill(Color.BLACK);
+        text.setFont(Font.font("Arial", 16));
+        text.setX(x);
+        text.setY(y);
+        text.setUserData("turnDisplay");
+        boardPane.getChildren().add(text);
+    }
+
+    // Pie Button Methods
+    private void addPieButton() {
+        Button button = new Button("Activate Pie Rule");
+        button.setLayoutX(BORDER + 4 * RADIUS + 220);
+        button.setLayoutY(STRIP_Y + 20);
+        button.setFont(Font.font("Arial", 16));
+        button.setPrefHeight(40);
+        button.setPrefWidth(250);
+        button.setStyle("-fx-background-color: dodgerblue; -fx-text-fill: black;");
+        button.setUserData("pieButton");
+        button.setOnAction(e -> onPieRuleActivated());
+        boardPane.getChildren().add(button);
+    }
+
+    // Helpers for Pie Button
+    private void onPieRuleActivated() {
+        boardPane.getChildren().removeIf(node -> "pieButton".equals(node.getUserData()));
+        showPieRuleAlert();
+        callbacks.onSwitchColor();
+        callbacks.onPieRuleUsed();
+        displayPlayerTurn();
+        callbacks.onRunAnalysis();
+    }
+
+    private void showPieRuleAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Quax");
+        alert.setHeaderText("Pie Rule:");
+        alert.setContentText("Pie Rule used. Player 1 now plays WHITE");
+        alert.showAndWait();
+    }
+
+    // Strategy Button Labels
+    private void addStrategyButton() {
+        Button btn = new Button("Show\nStrategy");
+        btn.setLayoutX(TOTAL_SIZE / 2 - 50);
+        btn.setLayoutY(STRIP_Y + 20);
+        btn.setFont(Font.font("Arial", 12));
+        btn.setPrefWidth(70);
+        btn.setPrefHeight(40);
+        btn.setWrapText(true);
+        btn.setStyle("-fx-background-color: limegreen; -fx-text-fill: black;");
+        btn.setUserData("strategyButton");
+        btn.setOnAction(e -> callbacks.onShowStrategy());
+        boardPane.getChildren().add(btn);
+    }
+
+    // Callbacks into GameController so it makes these changes to the actual game
+    public interface Callbacks {
+        void onShowStrategy();
+
+        void onPieRuleUsed();
+
+        void onSwitchColor();
+
+        void onRunAnalysis();
+    }
+
 }

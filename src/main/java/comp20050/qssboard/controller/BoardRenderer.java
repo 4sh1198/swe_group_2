@@ -1,7 +1,7 @@
 package comp20050.qssboard.controller;
 
-import comp20050.qssboard.model.QuaxBoard;
 import comp20050.qssboard.model.Octagon;
+import comp20050.qssboard.model.QuaxBoard;
 import comp20050.qssboard.model.Rhombus;
 import comp20050.qssboard.model.Tile;
 import javafx.scene.layout.Pane;
@@ -11,31 +11,17 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class BoardRenderer implements BoardConfig{
+public class BoardRenderer implements BoardConfig {
 
     private final Pane boardPane;
     private final QuaxBoard board;
-
-    // Callback fired when the user clicks any tile polygon
-    private final TileClickHandler onTileClicked;
-
-    @FunctionalInterface
-    public interface TileClickHandler {
-        void onClick(Tile tile, Polygon shape);
-    }
+    private final TileClickHandler onTileClicked;  // Callback fired when the user clicks any tile polygon
 
     public BoardRenderer(Pane boardPane, QuaxBoard board, TileClickHandler onTileClicked) {
-        this.boardPane     = boardPane;
-        this.board         = board;
+        this.boardPane = boardPane;
+        this.board = board;
         this.onTileClicked = onTileClicked;
     }
-
-    // Game state that BoardRenderer needs to read for display purposes
-    private int       moveCount  = 0;
-    private boolean   pieRuleUsed = false;
-    private boolean   botGame    = true;
-
-    // Main draw method
 
     protected void drawBoard() {
         boardPane.getChildren().clear();
@@ -87,39 +73,49 @@ public class BoardRenderer implements BoardConfig{
         drawLabels();
     }
 
-    // Border strips
+    // Main draw method
 
     private void drawBorders() {
         // Edge strips (excluding corners)
-        Rectangle topStrip    = new Rectangle(BORDER, 0,   TOTAL_SIZE-2*BORDER, BORDER);
-        Rectangle bottomStrip = new Rectangle(BORDER, TOTAL_SIZE-BORDER,  TOTAL_SIZE-2*BORDER, BORDER);
-        Rectangle leftStrip   = new Rectangle(0, BORDER,   BORDER, TOTAL_SIZE-2*BORDER);
-        Rectangle rightStrip  = new Rectangle(TOTAL_SIZE-BORDER, BORDER, BORDER, TOTAL_SIZE-2*BORDER);
-        topStrip.setFill(Color.BLACK);    bottomStrip.setFill(Color.BLACK);
-        leftStrip.setFill(Color.web("#F5F1E8"));   rightStrip.setFill(Color.web("#F5F1E8"));
+        Rectangle topStrip = new Rectangle(BORDER, 0, TOTAL_SIZE - 2 * BORDER, BORDER);
+        Rectangle bottomStrip = new Rectangle(BORDER, TOTAL_SIZE - BORDER, TOTAL_SIZE - 2 * BORDER, BORDER);
+        Rectangle leftStrip = new Rectangle(0, BORDER, BORDER, TOTAL_SIZE - 2 * BORDER);
+        Rectangle rightStrip = new Rectangle(TOTAL_SIZE - BORDER, BORDER, BORDER, TOTAL_SIZE - 2 * BORDER);
+        topStrip.setFill(Color.BLACK);
+        bottomStrip.setFill(Color.BLACK);
+        leftStrip.setFill(Color.web("#F5F1E8"));
+        rightStrip.setFill(Color.web("#F5F1E8"));
         boardPane.getChildren().addAll(topStrip, bottomStrip, leftStrip, rightStrip);
 
         //Black and white corners for more intuitive UI
         // Top-left corner
-        Polygon tlB = new Polygon(0.0, 0.0, BORDER, 0.0, BORDER, BORDER);   tlB.setFill(Color.BLACK);
-        Polygon tlW = new Polygon(0.0, 0.0, 0.0, BORDER, BORDER, BORDER);   tlW.setFill(Color.web("#F5F1E8"));
+        Polygon tlB = new Polygon(0.0, 0.0, BORDER, 0.0, BORDER, BORDER);
+        tlB.setFill(Color.BLACK);
+        Polygon tlW = new Polygon(0.0, 0.0, 0.0, BORDER, BORDER, BORDER);
+        tlW.setFill(Color.web("#F5F1E8"));
         // Top-right corner
-        Polygon trB = new Polygon(TOTAL_SIZE-BORDER, 0.0, TOTAL_SIZE, 0.0, TOTAL_SIZE-BORDER, BORDER); trB.setFill(Color.BLACK);
-        Polygon trW = new Polygon(TOTAL_SIZE, 0.0, TOTAL_SIZE, BORDER, TOTAL_SIZE-BORDER, BORDER); trW.setFill(Color.web("#F5F1E8"));
+        Polygon trB = new Polygon(TOTAL_SIZE - BORDER, 0.0, TOTAL_SIZE, 0.0, TOTAL_SIZE - BORDER, BORDER);
+        trB.setFill(Color.BLACK);
+        Polygon trW = new Polygon(TOTAL_SIZE, 0.0, TOTAL_SIZE, BORDER, TOTAL_SIZE - BORDER, BORDER);
+        trW.setFill(Color.web("#F5F1E8"));
         // Bottom-left corner
-        Polygon blB = new Polygon(0.0, TOTAL_SIZE, BORDER, TOTAL_SIZE, BORDER, TOTAL_SIZE-BORDER); blB.setFill(Color.BLACK);
-        Polygon blW = new Polygon(0.0, TOTAL_SIZE-BORDER, 0.0, TOTAL_SIZE, BORDER, TOTAL_SIZE-BORDER); blW.setFill(Color.web("#F5F1E8"));
+        Polygon blB = new Polygon(0.0, TOTAL_SIZE, BORDER, TOTAL_SIZE, BORDER, TOTAL_SIZE - BORDER);
+        blB.setFill(Color.BLACK);
+        Polygon blW = new Polygon(0.0, TOTAL_SIZE - BORDER, 0.0, TOTAL_SIZE, BORDER, TOTAL_SIZE - BORDER);
+        blW.setFill(Color.web("#F5F1E8"));
         // Bottom-right corner
-        Polygon brB = new Polygon(TOTAL_SIZE-BORDER, TOTAL_SIZE, TOTAL_SIZE, TOTAL_SIZE, TOTAL_SIZE-BORDER, TOTAL_SIZE-BORDER); brB.setFill(Color.BLACK);
-        Polygon brW = new Polygon(TOTAL_SIZE, TOTAL_SIZE-BORDER, TOTAL_SIZE, TOTAL_SIZE, TOTAL_SIZE-BORDER, TOTAL_SIZE-BORDER); brW.setFill(Color.web("#F5F1E8"));
+        Polygon brB = new Polygon(TOTAL_SIZE - BORDER, TOTAL_SIZE, TOTAL_SIZE, TOTAL_SIZE, TOTAL_SIZE - BORDER, TOTAL_SIZE - BORDER);
+        brB.setFill(Color.BLACK);
+        Polygon brW = new Polygon(TOTAL_SIZE, TOTAL_SIZE - BORDER, TOTAL_SIZE, TOTAL_SIZE, TOTAL_SIZE - BORDER, TOTAL_SIZE - BORDER);
+        brW.setFill(Color.web("#F5F1E8"));
 
-        boardPane.getChildren().addAll(tlB,tlW, trB,trW, blB,blW, brB,brW);
+        boardPane.getChildren().addAll(tlB, tlW, trB, trW, blB, blW, brB, brW);
     }
 
-    // Column / Row labels
+    // Border strips
 
     private void drawLabels() {
-        String[] letters = {"A","B","C","D","E","F","G","H","I","J","K"};
+        String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"};
 
         for (int col = 0; col < CELLS; col++) {
             double x = BORDER + col * STEP + STEP / 2.0;
@@ -128,12 +124,14 @@ public class BoardRenderer implements BoardConfig{
         }
 
         for (int row = 0; row < CELLS; row++) {
-            int    number = CELLS - row;
-            double y      = BORDER + row * STEP + STEP / 2.0 + 5;
-            addLabel(String.valueOf(number), Color.BLACK, BORDER / 2,                    y);
+            int number = CELLS - row;
+            double y = BORDER + row * STEP + STEP / 2.0 + 5;
+            addLabel(String.valueOf(number), Color.BLACK, BORDER / 2, y);
             addLabel(String.valueOf(number), Color.BLACK, TOTAL_SIZE - BORDER / 2, y);
         }
     }
+
+    // Column / Row labels
 
     // Shared helper to avoid duplicating label setup four times
     private void addLabel(String text, Color fill, double x, double y) {
@@ -168,10 +166,15 @@ public class BoardRenderer implements BoardConfig{
     protected Polygon makeRhombus(double cx, double cy) {
         double rhoRadius = RADIUS * (Math.cos(Math.PI / 8) - Math.sin(Math.PI / 8));
         return new Polygon(
-                cx,             cy - rhoRadius,
+                cx, cy - rhoRadius,
                 cx + rhoRadius, cy,
-                cx,             cy + rhoRadius,
+                cx, cy + rhoRadius,
                 cx - rhoRadius, cy
         );
+    }
+
+    @FunctionalInterface
+    public interface TileClickHandler {
+        void onClick(Tile tile, Polygon shape);
     }
 }

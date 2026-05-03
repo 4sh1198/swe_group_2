@@ -9,7 +9,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="jar file created" />
+    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="expanded show strategy, did some work on formatting">
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02-05-2026_03_43_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02-05-2026_03_43__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02-05-2026_16_17_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02-05-2026_16_17__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/Launcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/QuaxApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/QuaxApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/BoardRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/BoardRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/BoardUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/BoardUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/BotRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/BotRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/StrategyOverlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/StrategyOverlay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/BitBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/BitBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/Direction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/MonteCarloSimulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/MonteCarloSimulator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/Octagon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/Octagon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/QuaxBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/QuaxBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/Rhombus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/Rhombus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/controller/MonteCarloSimulatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/model/MonteCarloSimulatorTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,6 +63,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="SOFT" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -63,56 +85,60 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.QSSBoard.jar.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GameControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GameControllerTest.hideStrategyRemoveWinRate.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GameControllerTest.hideStrategyRemovesWinRate.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GameControllerTest.hideStrategyRestoresShowButton.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GameControllerTest.hideStrategyRestoresShowStrategy.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GameControllerTest.secondMoveOnRhombus.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GameControllerTest.showStrategyDisplaysWinRate.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GameControllerTest.showStrategyHighlightsTile.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GameControllerTest.showStrategyReplacesButtonWithHide.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LabelsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MonteCarloSimulatorTest.botChooseEmptyTile.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MonteCarloSimulatorTest.botFindsWInningMove.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MonteCarloSimulatorTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MonteCarloSimulatorTest.winRateIsValid.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/sharv/OneDrive/Desktop/Uni Docs/Java Lab/QSSBoard&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.mcp&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Launcher.executor": "Run",
+    "JAR Application.QSSBoard.jar.executor": "Run",
+    "JUnit.GameControllerTest.executor": "Run",
+    "JUnit.GameControllerTest.hideStrategyRemoveWinRate.executor": "Run",
+    "JUnit.GameControllerTest.hideStrategyRemovesWinRate.executor": "Run",
+    "JUnit.GameControllerTest.hideStrategyRestoresShowButton.executor": "Run",
+    "JUnit.GameControllerTest.hideStrategyRestoresShowStrategy.executor": "Run",
+    "JUnit.GameControllerTest.secondMoveOnRhombus.executor": "Run",
+    "JUnit.GameControllerTest.showStrategyDisplaysWinRate.executor": "Run",
+    "JUnit.GameControllerTest.showStrategyHighlightsTile.executor": "Run",
+    "JUnit.GameControllerTest.showStrategyReplacesButtonWithHide.executor": "Run",
+    "JUnit.LabelsTest.executor": "Run",
+    "JUnit.MonteCarloSimulatorTest.botChooseEmptyTile.executor": "Run",
+    "JUnit.MonteCarloSimulatorTest.botFindsWInningMove.executor": "Run",
+    "JUnit.MonteCarloSimulatorTest.executor": "Run",
+    "JUnit.MonteCarloSimulatorTest.winRateIsValid.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/sharv/OneDrive/Desktop/Uni Docs/Java Lab/QSSBoard",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "ml.llm.mcp",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\sharv\OneDrive\Desktop\Uni Docs\Java Lab\QSSBoard\" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="comp20050.qssboard.model" />
+    </key>
   </component>
-  <component name="RunManager" selected="JAR Application.QSSBoard.jar">
+  <component name="RunManager">
     <configuration name="GameControllerTest.hideStrategyRestoresShowButton" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="QSSBoard" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="comp20050.qssboard.controller.*" />
+          <option name="PATTERN" value="comp20050.qssboard.model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -128,7 +154,7 @@
       <module name="QSSBoard" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="comp20050.qssboard.controller.*" />
+          <option name="PATTERN" value="comp20050.qssboard.model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -144,7 +170,7 @@
       <module name="QSSBoard" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="comp20050.qssboard.controller.*" />
+          <option name="PATTERN" value="comp20050.qssboard.model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -160,7 +186,7 @@
       <module name="QSSBoard" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="comp20050.qssboard.controller.*" />
+          <option name="PATTERN" value="comp20050.qssboard.model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -177,11 +203,11 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="JAR Application.QSSBoard.jar" />
       <item itemvalue="JUnit.GameControllerTest.hideStrategyRestoresShowButton" />
       <item itemvalue="JUnit.GameControllerTest.hideStrategyRestoresShowStrategy" />
       <item itemvalue="JUnit.GameControllerTest.secondMoveOnRhombus" />
       <item itemvalue="JUnit.GameControllerTest.showStrategyHighlightsTile" />
-      <item itemvalue="JAR Application.QSSBoard.jar" />
     </list>
     <recent_temporary>
       <list>
@@ -322,7 +348,23 @@
       <option name="project" value="LOCAL" />
       <updated>1776890723919</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="jar file created">
+      <option name="closed" value="true" />
+      <created>1776891108177</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1776891108177</updated>
+    </task>
+    <task id="LOCAL-00015" summary="expanded show strategy, did some work on formatting">
+      <option name="closed" value="true" />
+      <created>1777767716432</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1777767716432</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -353,7 +395,8 @@
     <MESSAGE value="tests for sprint 4 all passing" />
     <MESSAGE value="fixed previous failing tests" />
     <MESSAGE value="jar file created" />
-    <option name="LAST_COMMIT_MESSAGE" value="jar file created" />
+    <MESSAGE value="expanded show strategy, did some work on formatting" />
+    <option name="LAST_COMMIT_MESSAGE" value="expanded show strategy, did some work on formatting" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

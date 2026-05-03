@@ -1,6 +1,9 @@
 package comp20050.qssboard.controller;
 
-import comp20050.qssboard.model.*;
+import comp20050.qssboard.model.MonteCarloSimulator;
+import comp20050.qssboard.model.QuaxBoard;
+import comp20050.qssboard.model.Tile;
+import comp20050.qssboard.model.TileState;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -9,76 +12,90 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
-import java.util.Optional;
+public class GameController implements BoardConfig {
 
-public class GameController implements BoardConfig{
-
-    @FXML private Pane boardPane;
+    @FXML
+    private Pane boardPane;
 
     private QuaxBoard board;
     private int moveCount = 0;
-    private boolean pieRuleUsed = false;
+    private final boolean pieRuleUsed = false;
     private boolean gameOver = false;
-    private boolean botGame = true;
+    private final boolean botGame = true;
     private boolean testMode = false;
     private boolean isAnalysing = false;
-
     private TileState humanColor = TileState.BLACK;
     private TileState botColor = TileState.WHITE;
+    private final MonteCarloSimulator simulator = new MonteCarloSimulator(100000);
+    // Components
+    private BoardRenderer renderer;
+    private BoardUI boardUI;
+    private StrategyOverlay strategyOverlay;
+    private BotRunner botRunner;
 
-    private int strategyMove = Integer.MIN_VALUE;
-    private double bestMoveWinRate = 0.0;
-
-    public void setTestMode(boolean testMode){
+    public void setTestMode(boolean testMode) {
         this.testMode = testMode;
     }
-
-    private MonteCarloSimulator simulator = new MonteCarloSimulator(2000000);
-
-    // Components
-    private BoardRenderer   renderer;
-    private BoardUI         boardUI;
-    private StrategyOverlay strategyOverlay;
-    private BotRunner       botRunner;
 
     @FXML
     public void initialize() {
         board = new QuaxBoard(CELLS);
 
-        // Wire up components with callbacks so they can reach back into
-        // GameController without holding a direct reference to it
+        // Wire up components with callbacks so they can reach back into GameController without holding a direct reference to it
         renderer = new BoardRenderer(boardPane, board, this::onTileClicked);
 
-        boardUI = new BoardUI(
-                boardPane, board, renderer,
-                this::showStrategy,   // onShowStrategy
-                this::onPieRuleUsed,  // onPieRuleUsed
-                this::switchColor,    // onSwitchColor
-                this::runAnalysis     // onRunAnalysis
-        );
+        BoardUI.Callbacks callbacks = new BoardUI.Callbacks() {
+            public void onShowStrategy() {
+                showStrategy();
+            }
+
+            public void onPieRuleUsed() {
+                onPieRuleUsed();
+            }
+
+            public void onSwitchColor() {
+                switchColor();
+            }
+
+            public void onRunAnalysis() {
+                runAnalysis();
+            }
+        };
+
+        BotRunner.Callbacks botCallbacks = new BotRunner.Callbacks() {
+            public void onDisplayPlayerTurn() {
+                boardUI.displayPlayerTurn();
+            }
+
+            public void onRunAnalysisDone() {
+                isAnalysing = false;
+            }
+
+            public void onWin(TileState winner) {
+                gameOver = true;
+                botRunner.setGameOver(true);
+                boardUI.displayWinner(winner);
+            }
+
+            public void onMoveResult(int best, double rate) {
+                strategyOverlay.setStrategyMove(best, rate);
+            }
+
+            public void onMovePlayed() {
+                moveCount++;
+                syncComponentState();
+            }
+        };
+
+        boardUI = new BoardUI(boardPane, board, renderer, callbacks);
 
         strategyOverlay = new StrategyOverlay(boardPane, board, simulator, renderer, botColor);
 
-        botRunner = new BotRunner(
-                boardPane, simulator,
-                boardUI::displayPlayerTurn,          // onDisplayPlayerTurn
-                () -> isAnalysing = false,           // onRunAnalysisDone
-                winner -> {                          // onWin
-                    gameOver = true;
-                    botRunner.setGameOver(true);
-                    boardUI.displayWinner(winner);
-                },
-                (best, rate) -> {                    // onMoveResult
-                    strategyMove    = best;
-                    bestMoveWinRate = rate;
-                    strategyOverlay.setStrategyMove(best, rate);
-                },
-                () -> { moveCount++; syncComponentState(); } // onMovePlayed
-        );
+        botRunner = new BotRunner(boardPane, simulator, botCallbacks);
+
         botRunner.setBoard(board);
         botRunner.setBotColor(botColor);
         botRunner.setTestMode(testMode);
-
         renderer.drawBoard();
         boardUI.displayPlayerTurn();
 
@@ -92,8 +109,9 @@ public class GameController implements BoardConfig{
         }
     }
 
-    // ask the player what colour they want to play
+    // Ask the player what colour they want to play
     private void chooseBotColourAtStart() {
+        // Popup that asks what colour player wants
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Quax");
         alert.setHeaderText("Human V Bot");
@@ -104,7 +122,7 @@ public class GameController implements BoardConfig{
 
         if (botColor == TileState.BLACK) runAnalysis();
 
-        //show a confirmation popup so user knows what color to play
+        // Show a confirmation popup so user knows what color to play
         Alert info = new Alert(Alert.AlertType.INFORMATION);
         info.setTitle("Quax");
         info.setHeaderText("Bot player added");
@@ -115,32 +133,23 @@ public class GameController implements BoardConfig{
     void applyChosenColor(ButtonType choice) {
         if (choice != null && choice.getText().equalsIgnoreCase("white")) {
             humanColor = TileState.WHITE;
-            botColor   = TileState.BLACK;
+            botColor = TileState.BLACK;
         } else {
             humanColor = TileState.BLACK;
-            botColor   = TileState.WHITE;
+            botColor = TileState.WHITE;
         }
         // Keep BotRunner in sync after colour is decided
         botRunner.setBotColor(botColor);
         strategyOverlay.setBotColor(botColor);
     }
 
-    public void switchColor(){
+    public void switchColor() {
         board.setBlackTurn(false);
     }
 
-    private void onPieRuleUsed() {
-        pieRuleUsed = true;
-        botColor    = TileState.WHITE;
-        botRunner.setBotColor(botColor);
-        syncComponentState();
-    }
-
-
-    // Event handler
-
+    // Display move played
     private void onTileClicked(Tile tile, Polygon shape) {
-        if (gameOver)    return;
+        if (gameOver) return;
         if (isAnalysing) return;
 
         // Clear any strategy overlays left from the previous turn

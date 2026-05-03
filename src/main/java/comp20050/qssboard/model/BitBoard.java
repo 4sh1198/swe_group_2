@@ -1,9 +1,7 @@
 package comp20050.qssboard.model;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 public class BitBoard {
 
@@ -21,7 +19,6 @@ public class BitBoard {
     private boolean blackTurn;
 
     // Octagon access — col 0..10, row 0..10
-
     public int getOctagon(int col, int row) {
         return getBits(OCT_OFFSET + (row * 11 + col) * 2);
     }
@@ -33,7 +30,6 @@ public class BitBoard {
     // Rhombus access — col 0..9, row 0..9
     // These are the integer-floored indices of QuaxBoard's half-integer coords.
     // getRhombus(c, r) here corresponds to QuaxBoard.getRhombus(c+0.5, r+0.5).
-
     public int getRhombus(int col, int row) {
         return getBits(RHO_OFFSET + (row * 10 + col) * 2);
     }
@@ -43,30 +39,32 @@ public class BitBoard {
     }
 
     // Turn
+    public boolean isBlackTurn() {
+        return blackTurn;
+    }
 
-    public boolean isBlackTurn() { return blackTurn; }
-    public void setBlackTurn(boolean b) { blackTurn = b; }
+    public void setBlackTurn(boolean b) {
+        blackTurn = b;
+    }
 
     // Core bit operations
     // All bit indices are (tile_index * 2), so always even.
     // Even offset % 64 is always in 0,2,4,...,62 — never 63.
     // A 2-bit value therefore never straddles a long boundary.
-
     private int getBits(int bitIndex) {
-        int li  = bitIndex / 64;
+        int li = bitIndex / 64;
         int off = bitIndex % 64;
-        return (int)((bits[li] >>> off) & 0b11L);
+        return (int) ((bits[li] >>> off) & 0b11L);
     }
 
     private void setBits(int bitIndex, int state) {
-        int li  = bitIndex / 64;
+        int li = bitIndex / 64;
         int off = bitIndex % 64;
         bits[li] &= ~(0b11L << off);
-        bits[li] |=  ((long) state << off);
+        bits[li] |= ((long) state << off);
     }
 
     // Copy copies the board: important for Monte Carlo space optimisation
-
     public BitBoard copy() {
         BitBoard b = new BitBoard();
         System.arraycopy(this.bits, 0, b.bits, 0, 7);
@@ -74,64 +72,7 @@ public class BitBoard {
         return b;
     }
 
-    // Win check mirrors QuaxBoard.checkWin exactly, but is necessary
-    // as the bitBoard has different getters and setters
-
-    public boolean checkWin(int player) {
-        boolean[][] visitedOct = new boolean[11][11];
-        boolean[][] visitedRho = new boolean[10][10];
-        Queue<int[]> queue = new ArrayDeque<>();
-
-        if (player == BLACK) {
-            for (int c = 0; c < 11; c++) {
-                if (getOctagon(c, 0) == BLACK && !visitedOct[0][c]) {
-                    visitedOct[0][c] = true;
-                    queue.add(new int[]{0, c, 0});
-                }
-            }
-        } else {
-            for (int r = 0; r < 11; r++) {
-                if (getOctagon(0, r) == WHITE && !visitedOct[r][0]) {
-                    visitedOct[r][0] = true;
-                    queue.add(new int[]{0, 0, r});
-                }
-            }
-        }
-
-        while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-            int type = current[0], c = current[1], r = current[2];
-
-            // Only octagons trigger the win condition
-            if (type == 0) {
-                if (player == BLACK && r == 10) return true;
-                if (player == WHITE && c == 10) return true;
-            }
-
-            for (int[] n : getNeighbours(type, c, r)) {
-                int nt = n[0], nc = n[1], nr = n[2];
-                int state = (nt == 0) ? getOctagon(nc, nr) : getRhombus(nc, nr);
-                if (state != player) continue;
-
-                if (nt == 0) {
-                    if (!visitedOct[nr][nc]) {
-                        visitedOct[nr][nc] = true;
-                        queue.add(n);
-                    }
-                } else {
-                    if (!visitedRho[nr][nc]) {
-                        visitedRho[nr][nc] = true;
-                        queue.add(n);
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    // Mirrors QuaxBoard.getNeighbors() exactly.
-    // Encoded as {type, col, row} where type 0=octagon, 1=rhombus.
+    // Mirrors QuaxBoard.getNeighbors() exactly. Encoded as {type, col, row} where type 0=octagon, 1=rhombus.
     protected List<int[]> getNeighbours(int type, int c, int r) {
         List<int[]> neighbours = new ArrayList<>();
 
@@ -139,9 +80,9 @@ public class BitBoard {
             // Octagon at (c, r)
 
             // 4 orthogonal octagon neighbours (N/S/E/W)
-            if (r > 0)  neighbours.add(new int[]{0, c, r - 1});
+            if (r > 0) neighbours.add(new int[]{0, c, r - 1});
             if (r < 10) neighbours.add(new int[]{0, c, r + 1});
-            if (c > 0)  neighbours.add(new int[]{0, c - 1, r});
+            if (c > 0) neighbours.add(new int[]{0, c - 1, r});
             if (c < 10) neighbours.add(new int[]{0, c + 1, r});
 
             // 4 diagonal rhombus neighbours (NW/NE/SW/SE)
@@ -149,9 +90,9 @@ public class BitBoard {
             // QuaxBoard: getRhombus(col+0.5, row-0.5) → BitBoard index (c,   r-1)
             // QuaxBoard: getRhombus(col-0.5, row+0.5) → BitBoard index (c-1, r  )
             // QuaxBoard: getRhombus(col+0.5, row+0.5) → BitBoard index (c,   r  )
-            if (r > 0 && c > 0)   neighbours.add(new int[]{1, c - 1, r - 1});
-            if (r > 0 && c < 10)  neighbours.add(new int[]{1, c, r - 1});
-            if (r < 10 && c > 0)  neighbours.add(new int[]{1, c - 1, r});
+            if (r > 0 && c > 0) neighbours.add(new int[]{1, c - 1, r - 1});
+            if (r > 0 && c < 10) neighbours.add(new int[]{1, c, r - 1});
+            if (r < 10 && c > 0) neighbours.add(new int[]{1, c - 1, r});
             if (r < 10 && c < 10) neighbours.add(new int[]{1, c, r});
 
         } else {

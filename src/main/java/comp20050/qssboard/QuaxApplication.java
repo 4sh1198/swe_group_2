@@ -16,7 +16,10 @@ public class QuaxApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), totalSize, sceneHeight);
         stage.setTitle("Quax (Human V Bot)");
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.setResizable(true);  // Allow horizontal resizing so the strategy side-panel can expand the window.
+        stage.setMinHeight(sceneHeight + 40);
+        stage.setMaxHeight(sceneHeight + 40);
+        stage.setMinWidth(totalSize + 16);
         stage.show();
     }
 }
