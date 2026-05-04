@@ -202,6 +202,8 @@ public class GameController implements BoardConfig {
 
     // Showing strategy is handled by StrategyOverlay
     private void showStrategy() {
+        //shouldn't show strategy if game is already won
+        if (gameOver) return;
         strategyOverlay.show();
     }
 
