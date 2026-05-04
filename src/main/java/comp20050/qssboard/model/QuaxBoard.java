@@ -42,7 +42,12 @@ public class QuaxBoard {
 
 
     public Octagon getOctagon(int col, int row) {
-        if (col < 0 || col >= sideSize || row < 0 || row >= sideSize) return null;
+        if (col < 0 || col >= sideSize || row < 0 || row >= sideSize) {
+            throw new IllegalArgumentException(
+                    "Octagon coordinates out of bounds: col=" + col + ", row=" + row +
+                            " (board size=" + sideSize + ")"
+            );
+        }
         return octagons.get(row * sideSize + col);
     }
 
@@ -50,7 +55,9 @@ public class QuaxBoard {
         for (Rhombus r : rhombuses) {
             if (r.getCentre()[0] == col && r.getCentre()[1] == row) return r;
         }
-        return null;
+        throw new IllegalArgumentException(
+                "No rhombus found at coordinates: col=" + col + ", row=" + row
+        );
     }
 
     public boolean isBlackTurn() {
@@ -84,6 +91,13 @@ public class QuaxBoard {
             // (int) cast floors 0.5→0, 1.5→1, ..., 9.5→9 — the correct array index
             int c = (int) ((Rhombus) tile).getCol();
             int r = (int) ((Rhombus) tile).getRow();
+
+            // Rhombus indices are always 0..9, so surrounding octagons at 0..10 are always valid
+            if (c < 0 || c >= sideSize - 1 || r < 0 || r >= sideSize - 1) {
+                throw new IllegalStateException(
+                        "Rhombus has invalid internal coordinates: col=" + c + ", row=" + r
+                );
+            }
 
             // All four surrounding octagons always exist — no bounds checks needed
             neighbours.add(getOctagon(c, r)); // NW

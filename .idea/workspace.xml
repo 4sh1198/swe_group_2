@@ -9,10 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="expanded show strategy, did some work on formatting">
+    <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="fix tests not working.&#10; a function was called which used showandwait() and required a user to dismiss the alert, which is not possible in tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/BoardUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/BoardUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/QSSBoard_jar/QSSBoard.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/QSSBoard_jar/QSSBoard.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/BoardRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/BoardRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/QuaxBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/QuaxBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/controller/GameControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/controller/GameControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,12 +57,12 @@
     &quot;assignee&quot;: &quot;0TricK&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/4sh1198/swe_group_2.git&quot;,
-    &quot;accountId&quot;: &quot;fc835948-79d9-41cf-a7e5-559f561ee27b&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/4sh1198/swe_group_2.git",
+    "accountId": "34187012-c06b-47c4-aecf-db76c2d22c5d"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -117,7 +119,7 @@
       <recent name="comp20050.qssboard.model" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JAR Application.QSSBoard.jar">
     <configuration name="GameControllerTest.hideStrategyRestoresShowButton" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="QSSBoard" />
       <extension name="coverage">
@@ -203,6 +205,14 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -227,6 +237,7 @@
       <workItem from="1776007719470" duration="723000" />
       <workItem from="1776008467239" duration="1867000" />
       <workItem from="1776817599068" duration="5148000" />
+      <workItem from="1777928089343" duration="3016000" />
     </task>
     <task id="LOCAL-00001" summary="feature 3 implemented">
       <option name="closed" value="true" />
@@ -348,7 +359,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777767716432</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="fix tests not working.&#10; a function was called which used showandwait() and required a user to dismiss the alert, which is not possible in tests">
+      <option name="closed" value="true" />
+      <created>1777841118947</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1777841118948</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -380,7 +399,8 @@
     <MESSAGE value="fixed previous failing tests" />
     <MESSAGE value="jar file created" />
     <MESSAGE value="expanded show strategy, did some work on formatting" />
-    <option name="LAST_COMMIT_MESSAGE" value="expanded show strategy, did some work on formatting" />
+    <MESSAGE value="fix tests not working.&#10; a function was called which used showandwait() and required a user to dismiss the alert, which is not possible in tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix tests not working.&#10; a function was called which used showandwait() and required a user to dismiss the alert, which is not possible in tests" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -33,6 +33,19 @@ public class BoardRenderer implements BoardConfig {
         boardPane.getChildren().add(boardBg);
 
         // 2. Draw rhombuses first (they sit behind octagons visually)
+        drawRhombuses();
+
+        // 3. Draw octagons on top
+        drawOctagons();
+
+        // 4. Border strips (drawn on top so they cover any overshoot)
+        drawBorders();
+
+        // 5. Labels
+        drawLabels();
+    }
+
+    private void drawRhombuses() {
         for (int r = 0; r < CELLS - 1; r++) {
             for (int c = 0; c < CELLS - 1; c++) {
                 Rhombus rho = board.getRhombus(c + 0.5, r + 0.5);
@@ -48,8 +61,9 @@ public class BoardRenderer implements BoardConfig {
                 boardPane.getChildren().add(rhoShape);
             }
         }
+    }
 
-        // 3. Draw octagons on top
+    private void drawOctagons() {
         for (int r = 0; r < CELLS; r++) {
             for (int c = 0; c < CELLS; c++) {
                 Octagon oct = board.getOctagon(c, r);
@@ -65,15 +79,7 @@ public class BoardRenderer implements BoardConfig {
                 boardPane.getChildren().add(octShape);
             }
         }
-
-        // 4. Border strips (drawn on top so they cover any overshoot)
-        drawBorders();
-
-        // 5. Labels
-        drawLabels();
     }
-
-    // Main draw method
 
     private void drawBorders() {
         // Edge strips (excluding corners)

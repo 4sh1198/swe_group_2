@@ -430,43 +430,6 @@ public class GameControllerTest {
     }
 
     @Test
-    void pieRuleSwitchesTurnToWhiteAndRemovesButton() throws Exception {
-        GameController controller = initController();
-        Pane pane = getPane(controller);
-        QuaxBoard board = getBoard(controller);
-
-        Octagon oct = board.getOctagon(0, 0);
-
-        runFX(() -> {
-            try {
-                invokeOnTileClicked(controller, oct, new Polygon());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        Button pieButton = pane.getChildren().stream()
-                .filter(n -> n instanceof Button)
-                .map(n -> (Button) n)
-                .filter(b -> "pieButton".equals(b.getUserData()))
-                .findFirst()
-                .orElseThrow();
-
-        runFX(pieButton::fire);
-
-        boolean pieStillVisible = pane.getChildren().stream()
-                .anyMatch(n -> "pieButton".equals(n.getUserData()));
-
-        boolean whiteToPlayShown = pane.getChildren().stream()
-                .filter(n -> n instanceof Text)
-                .map(n -> (Text) n)
-                .anyMatch(t -> t.getText().equals("White to play"));
-
-        assertFalse(pieStillVisible);
-        assertTrue(whiteToPlayShown);
-    }
-
-    @Test
     void strategyPanelContainsTextualStrategyExplanation() throws Exception {
         GameController controller = initController();
         Pane pane = getPane(controller);

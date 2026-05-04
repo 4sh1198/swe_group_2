@@ -26,7 +26,7 @@ public class GameController implements BoardConfig {
     private boolean isAnalysing = false;
     private TileState humanColor = TileState.BLACK;
     private TileState botColor = TileState.WHITE;
-    private final MonteCarloSimulator simulator = new MonteCarloSimulator(100000);
+    private final MonteCarloSimulator simulator = new MonteCarloSimulator(2000000);
     // Components
     private BoardRenderer renderer;
     private BoardUI boardUI;
