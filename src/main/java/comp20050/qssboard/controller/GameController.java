@@ -19,9 +19,9 @@ public class GameController implements BoardConfig {
 
     private QuaxBoard board;
     private int moveCount = 0;
-    private final boolean pieRuleUsed = false;
+    private boolean pieRuleUsed = false;
     private boolean gameOver = false;
-    private final boolean botGame = true;
+    private boolean botGame = true;
     private boolean testMode = false;
     private boolean isAnalysing = false;
     private TileState humanColor = TileState.BLACK;
@@ -50,7 +50,7 @@ public class GameController implements BoardConfig {
             }
 
             public void onPieRuleUsed() {
-                onPieRuleUsed();
+                handlePieRuleUsed();
             }
 
             public void onSwitchColor() {
@@ -181,6 +181,14 @@ public class GameController implements BoardConfig {
         board.setBlackTurn(!board.isBlackTurn());
         boardUI.displayPlayerTurn();
         runAnalysis();
+    }
+
+    private void handlePieRuleUsed() {
+        pieRuleUsed = true;
+        botColor = TileState.WHITE;
+        botRunner.setBotColor(botColor);
+        strategyOverlay.setBotColor(botColor);
+        syncComponentState();
     }
 
     // Handled by BotRunner
