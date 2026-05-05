@@ -10,12 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73a999ee-0bd7-44c3-8c4c-6f43be8e9b50" name="Changes" comment="fix tests not working.&#10; a function was called which used showandwait() and required a user to dismiss the alert, which is not possible in tests">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/QSSBoard_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/QSSBoard_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/QSSBoard_jar/QSSBoard.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/QSSBoard_jar/QSSBoard.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/BoardRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/BoardRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/QuaxBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/comp20050/qssboard/model/QuaxBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/controller/GameControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/controller/GameControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/controller/GameControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/comp20050/qssboard/controller/ControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,12 +55,12 @@
     &quot;assignee&quot;: &quot;0TricK&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/4sh1198/swe_group_2.git",
-    "accountId": "34187012-c06b-47c4-aecf-db76c2d22c5d"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/4sh1198/swe_group_2.git&quot;,
+    &quot;accountId&quot;: &quot;34187012-c06b-47c4-aecf-db76c2d22c5d&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -106,7 +104,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.mcp&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -120,23 +118,22 @@
     </key>
   </component>
   <component name="RunManager" selected="JAR Application.QSSBoard.jar">
-    <configuration name="GameControllerTest.hideStrategyRestoresShowButton" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="QSSBoard" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="comp20050.qssboard.model.*" />
+          <option name="PATTERN" value="comp20050.qssboard.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="comp20050.qssboard.controller" />
-      <option name="MAIN_CLASS_NAME" value="comp20050.qssboard.controller.GameControllerTest" />
-      <option name="METHOD_NAME" value="hideStrategyRestoresShowButton" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="comp20050.qssboard.controller.ControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GameControllerTest.hideStrategyRestoresShowStrategy" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ControllerTest.showStrategyHighlightsTile" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="QSSBoard" />
       <extension name="coverage">
         <pattern>
@@ -145,41 +142,39 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="comp20050.qssboard.controller" />
-      <option name="MAIN_CLASS_NAME" value="comp20050.qssboard.controller.GameControllerTest" />
-      <option name="METHOD_NAME" value="hideStrategyRestoresShowStrategy" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GameControllerTest.secondMoveOnRhombus" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="QSSBoard" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="comp20050.qssboard.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="comp20050.qssboard.controller" />
-      <option name="MAIN_CLASS_NAME" value="comp20050.qssboard.controller.GameControllerTest" />
-      <option name="METHOD_NAME" value="secondMoveOnRhombus" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GameControllerTest.showStrategyHighlightsTile" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="QSSBoard" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="comp20050.qssboard.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="comp20050.qssboard.controller" />
-      <option name="MAIN_CLASS_NAME" value="comp20050.qssboard.controller.GameControllerTest" />
+      <option name="MAIN_CLASS_NAME" value="comp20050.qssboard.controller.ControllerTest" />
       <option name="METHOD_NAME" value="showStrategyHighlightsTile" />
       <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LabelsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="QSSBoard" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="comp20050.qssboard.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="comp20050.qssboard.controller" />
+      <option name="MAIN_CLASS_NAME" value="comp20050.qssboard.controller.LabelsTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MonteCarloSimulatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="QSSBoard" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="comp20050.qssboard.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="comp20050.qssboard.model" />
+      <option name="MAIN_CLASS_NAME" value="comp20050.qssboard.model.MonteCarloSimulatorTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -190,18 +185,16 @@
     </configuration>
     <list>
       <item itemvalue="JAR Application.QSSBoard.jar" />
-      <item itemvalue="JUnit.GameControllerTest.hideStrategyRestoresShowButton" />
-      <item itemvalue="JUnit.GameControllerTest.hideStrategyRestoresShowStrategy" />
-      <item itemvalue="JUnit.GameControllerTest.secondMoveOnRhombus" />
-      <item itemvalue="JUnit.GameControllerTest.showStrategyHighlightsTile" />
+      <item itemvalue="JUnit.ControllerTest" />
+      <item itemvalue="JUnit.ControllerTest.showStrategyHighlightsTile" />
+      <item itemvalue="JUnit.LabelsTest" />
+      <item itemvalue="JUnit.MonteCarloSimulatorTest" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JAR Application.QSSBoard.jar" />
-        <item itemvalue="JUnit.GameControllerTest.showStrategyHighlightsTile" />
-        <item itemvalue="JUnit.GameControllerTest.secondMoveOnRhombus" />
-        <item itemvalue="JUnit.GameControllerTest.hideStrategyRestoresShowButton" />
-        <item itemvalue="JUnit.GameControllerTest.hideStrategyRestoresShowStrategy" />
+        <item itemvalue="JUnit.LabelsTest" />
+        <item itemvalue="JUnit.MonteCarloSimulatorTest" />
       </list>
     </recent_temporary>
   </component>

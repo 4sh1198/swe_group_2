@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GameControllerTest {
+public class ControllerTest {
 
     // javafx setup
     @BeforeAll
