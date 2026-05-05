@@ -130,7 +130,7 @@ public class StrategyOverlay implements BoardConfig {
         y = addWinRateSection(panelX, y);
         y += 10;
         // Heatmap
-        y = addText("Heatmap Key For BOT's Next Move:", panelX + PANEL_MARGIN, y, 16, Color.BLACK);
+        y = addText("Heatmap Key For Next Best Moves:", panelX + PANEL_MARGIN, y, 16, Color.BLACK);
         y = addText("GREEN TO RED => BEST TO WORST", panelX + PANEL_MARGIN, y, 14, BOARD_BG);
     }
 
