@@ -320,6 +320,7 @@ public class GameControllerTest {
         runFX(() -> {});
 
         StrategyOverlay overlay = getStrategyOverlay(controller);
+        injectFakeWinRates(controller);
         runFX(() -> overlay.setStrategyMove(0, 0.75));
         runFX(overlay::show);
 
@@ -338,6 +339,7 @@ public class GameControllerTest {
         Pane pane = getPane(controller);
 
         StrategyOverlay overlay = getStrategyOverlay(controller);
+        injectFakeWinRates(controller);
         runFX(() -> overlay.setStrategyMove(0, 0.5));
         runFX(overlay::show);
 
@@ -357,6 +359,7 @@ public class GameControllerTest {
         Pane pane = getPane(controller);
 
         StrategyOverlay overlay = getStrategyOverlay(controller);
+        injectFakeWinRates(controller);
         runFX(() -> overlay.setStrategyMove(0, 0.75));
         runFX(overlay::show);
         runFX(overlay::hide);
@@ -376,6 +379,7 @@ public class GameControllerTest {
         Pane pane = getPane(controller);
 
         StrategyOverlay overlay = getStrategyOverlay(controller);
+        injectFakeWinRates(controller);
         runFX(() -> overlay.setStrategyMove(0, 0.5));
         runFX(overlay::show);
         runFX(overlay::hide);
@@ -395,6 +399,7 @@ public class GameControllerTest {
         Pane pane = getPane(controller);
 
         StrategyOverlay overlay = getStrategyOverlay(controller);
+        injectFakeWinRates(controller);
         runFX(() -> overlay.setStrategyMove(0, 0.5));
         runFX(overlay::show);
 
@@ -435,6 +440,7 @@ public class GameControllerTest {
         Pane pane = getPane(controller);
 
         StrategyOverlay overlay = getStrategyOverlay(controller);
+        injectFakeWinRates(controller);
         runFX(() -> overlay.setStrategyMove(0, 0.75));
         runFX(overlay::show);
 
@@ -453,6 +459,7 @@ public class GameControllerTest {
         Pane pane = getPane(controller);
 
         StrategyOverlay overlay = getStrategyOverlay(controller);
+        injectFakeWinRates(controller);
         runFX(() -> overlay.setStrategyMove(0, 0.75));
         runFX(overlay::show);
 
@@ -571,5 +578,19 @@ public class GameControllerTest {
         Method m = GameController.class.getDeclaredMethod("onTileClicked", Tile.class, Polygon.class);
         m.setAccessible(true);
         m.invoke(controller, tile, shape);
+    }
+
+    private static void injectFakeWinRates(GameController controller) throws Exception {
+        Field simField = GameController.class.getDeclaredField("simulator");
+        simField.setAccessible(true);
+        MonteCarloSimulator sim = (MonteCarloSimulator) simField.get(controller);
+
+        Map<Integer, Double> fakeRates = new LinkedHashMap<>();
+        // Populate a few empty tile scores so show() doesn't return early
+        for (int i = 1; i < 10; i++) fakeRates.put(i, 0.4 + i * 0.01);
+
+        Field ratesField = MonteCarloSimulator.class.getDeclaredField("lastWinRates");
+        ratesField.setAccessible(true);
+        ratesField.set(sim, fakeRates);
     }
 }
