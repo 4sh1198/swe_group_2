@@ -26,7 +26,7 @@ public class GameController implements BoardConfig {
     private boolean isAnalysing = false;
     private TileState humanColor = TileState.BLACK;
     private TileState botColor = TileState.WHITE;
-    private final MonteCarloSimulator simulator = new MonteCarloSimulator(2000000);
+    private final MonteCarloSimulator simulator = new MonteCarloSimulator(750000);
     // Components
     private BoardRenderer renderer;
     private BoardUI boardUI;
@@ -203,7 +203,7 @@ public class GameController implements BoardConfig {
     // Showing strategy is handled by StrategyOverlay
     private void showStrategy() {
         //shouldn't show strategy if game is already won
-        if (gameOver) return;
+        //if (gameOver) return;
         strategyOverlay.show();
     }
 

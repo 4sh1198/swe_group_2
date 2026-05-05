@@ -89,12 +89,25 @@ public class StrategyOverlay implements BoardConfig {
             overlay.setFill(interpolateHeatmap(normalised).deriveColor(0, 1, 1, 0.5));
             overlay.setMouseTransparent(true);
             overlay.setUserData("strategyHighlight");
-
-            if (move == strategyMove) {
-                overlay.setStroke(Color.YELLOW);
-                overlay.setStrokeWidth(2.5);
-            }
             boardPane.getChildren().add(overlay);
+
+            highlightLastBotMove();
+        }
+    }
+
+    private void highlightLastBotMove() {
+        if (strategyMove != Integer.MIN_VALUE) {
+            Polygon shape = getShapeForMove(strategyMove);
+            if (shape != null) {
+                Polygon marker = new Polygon();
+                marker.getPoints().addAll(shape.getPoints());
+                marker.setFill(Color.TRANSPARENT);
+                marker.setStroke(Color.YELLOW);
+                marker.setStrokeWidth(2.5);
+                marker.setMouseTransparent(true);
+                marker.setUserData("strategyHighlight");
+                boardPane.getChildren().add(marker);
+            }
         }
     }
 
@@ -113,7 +126,7 @@ public class StrategyOverlay implements BoardConfig {
         y = addWinRateSection(panelX, y);
         y += 10;
         // Heatmap
-        y = addText("Heatmap Key For Moves:", panelX + PANEL_MARGIN, y, 16, Color.BLACK);
+        y = addText("Heatmap Key For BOT's Next Move:", panelX + PANEL_MARGIN, y, 16, Color.BLACK);
         y = addText("GREEN TO RED => BEST TO WORST", panelX + PANEL_MARGIN, y, 14, BOARD_BG);
     }
 
@@ -122,9 +135,11 @@ public class StrategyOverlay implements BoardConfig {
         y = addText("Algorithm: MCTS", panelX + PANEL_MARGIN, y, 30, Color.BLACK);
         y += 2;
         y = addWrappedText(
-                "Monte Carlo Tree Search simulates millions of random " +
+                "Monte Carlo Tree Search simulates thousands of random " +
                         "game continuations from each empty tile and scores " +
-                        "each position by its win frequency.",
+                        "each continuation by its win frequency." +
+                        "The bot chooses the move with the best win rate" +
+                        "and plays it.",
                 panelX + PANEL_MARGIN, y, 18, BOARD_BG);
         return y;
     }
