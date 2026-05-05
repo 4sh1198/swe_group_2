@@ -27,10 +27,13 @@ public class StrategyOverlay implements BoardConfig {
     private final MonteCarloSimulator simulator;
     private final BoardRenderer renderer;
 
+    private boolean isVisible = false;
     private TileState botColor;
 
     private int strategyMove = Integer.MIN_VALUE;
     private double bestMoveWinRate = 0.0;
+
+    protected boolean isVisible() { return isVisible; }
 
     protected StrategyOverlay(Pane boardPane, QuaxBoard board,
                               MonteCarloSimulator simulator, BoardRenderer renderer,
@@ -52,6 +55,7 @@ public class StrategyOverlay implements BoardConfig {
     }
 
     protected void show() {
+        isVisible = true;
         boardPane.getChildren().removeIf(node -> "strategyHighlight".equals(node.getUserData()));
         boardPane.getChildren().removeIf(node -> "strategyPanel".equals(node.getUserData()));
 
@@ -162,6 +166,7 @@ public class StrategyOverlay implements BoardConfig {
 
     // Switching to hide strategy panel
     protected void hide() {
+        isVisible = false;
         boardPane.getChildren().removeIf(node -> "strategyHighlight".equals(node.getUserData()));
         boardPane.getChildren().removeIf(node -> "strategyPanel".equals(node.getUserData()));
 

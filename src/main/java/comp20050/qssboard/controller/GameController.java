@@ -26,7 +26,7 @@ public class GameController implements BoardConfig {
     private boolean isAnalysing = false;
     private TileState humanColor = TileState.BLACK;
     private TileState botColor = TileState.WHITE;
-    private final MonteCarloSimulator simulator = new MonteCarloSimulator(750000);
+    private final MonteCarloSimulator simulator = new MonteCarloSimulator(1250000);
     // Components
     private BoardRenderer renderer;
     private BoardUI boardUI;
@@ -65,6 +65,7 @@ public class GameController implements BoardConfig {
         BotRunner.Callbacks botCallbacks = new BotRunner.Callbacks() {
             public void onDisplayPlayerTurn() {
                 boardUI.displayPlayerTurn();
+                if (strategyOverlay.isVisible()) strategyOverlay.show();
             }
 
             public void onRunAnalysisDone() {
@@ -153,9 +154,6 @@ public class GameController implements BoardConfig {
         if (gameOver) return;
         if (isAnalysing) return;
 
-        // Clear any strategy overlays left from the previous turn
-        strategyOverlay.hide();
-
         if (tile.getState() != TileState.EMPTY) {
             throw new IllegalArgumentException("Tile is already occupied by a player");
         }
@@ -203,7 +201,7 @@ public class GameController implements BoardConfig {
     // Showing strategy is handled by StrategyOverlay
     private void showStrategy() {
         //shouldn't show strategy if game is already won
-        //if (gameOver) return;
+        if (gameOver) return;
         strategyOverlay.show();
     }
 

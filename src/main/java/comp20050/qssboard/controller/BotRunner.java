@@ -69,9 +69,6 @@ public class BotRunner {
     public void playBotMove(int move) {
         if (gameOver) return;
 
-        // Clear any lingering strategy overlays
-        boardPane.getChildren().removeIf(node -> "strategyHighlight".equals(node.getUserData()));
-
         if (move >= 0) {
             if (octagonMove(move)) return;
 

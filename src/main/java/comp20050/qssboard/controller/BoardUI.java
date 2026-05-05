@@ -157,7 +157,7 @@ public class BoardUI implements BoardConfig {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Quax");
         alert.setHeaderText("Pie Rule:");
-        alert.setContentText("Pie Rule used. Player 1 now plays WHITE");
+        alert.setContentText("Pie Rule used. BOT now plays WHITE");
         alert.showAndWait();
     }
 

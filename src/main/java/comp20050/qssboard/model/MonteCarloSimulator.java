@@ -22,6 +22,9 @@ public class MonteCarloSimulator {
     private final int simulations;
     public double lastBestWinRate = 0.0;
 
+    // Cached after each bestMove() call — reused by getAllWinRates() with no extra computation
+    private Map<Integer, Double> lastWinRates = Collections.emptyMap();
+
     public MonteCarloSimulator(int simulations) {
         this.simulations = simulations;
     }
@@ -100,9 +103,11 @@ public class MonteCarloSimulator {
         Map<Integer, Double> rates = computeWinRates(board.toBitBoard(), currentPlayer);
         if (rates.isEmpty()) return Integer.MIN_VALUE;
 
+        // Cache for use by getAllWinRates()
+        lastWinRates = rates;
+
         Map.Entry<Integer, Double> best = Collections.max(
-                rates.entrySet(),
-                Map.Entry.comparingByValue()
+                rates.entrySet(), Map.Entry.comparingByValue()
         );
 
         lastBestWinRate = best.getValue();
@@ -197,8 +202,7 @@ public class MonteCarloSimulator {
     }
 
     public Map<Integer, Double> getAllWinRates(QuaxBoard board, TileState botColor) {
-        int currentPlayer = botColor == TileState.BLACK ? BitBoard.BLACK : BitBoard.WHITE;
-        return computeWinRates(board.toBitBoard(), currentPlayer);
+        return lastWinRates;
     }
 
     private Map<Integer, Double> computeWinRates(BitBoard snapshot, int player) {
